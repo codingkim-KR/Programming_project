@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_FOREST",
+  "file": "footprint_trail.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.0,
+    0.0005000000000000004,
+    -0.0
+  ],
+  "bounds": {
+    "min": [
+      -0.19576445924825844,
+      0.0,
+      -0.8677311065213806
+    ],
+    "max": [
+      0.19576445924825844,
+      0.025,
+      0.8677311065213806
+    ],
+    "size": [
+      0.3915289184965169,
+      0.025,
+      1.7354622130427613
+    ]
+  },
+  "triangles": 72,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      0.0125,
+      0.0
+    ],
+    "size": [
+      0.3915289184965169,
+      0.025,
+      1.7354622130427613
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

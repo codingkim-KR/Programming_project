@@ -1,0 +1,720 @@
+{
+  "size": [
+    512,
+    512
+  ],
+  "cellSize": [
+    36,
+    36
+  ],
+  "grid": [
+    14,
+    14
+  ],
+  "unusedRightBottomPixels": 8,
+  "slots": "Canonical full-catalog positions; other chapters remain transparent.",
+  "icons": [
+    {
+      "id": "S001",
+      "name": "비전탄",
+      "file": "S001.png",
+      "atlasRect": [
+        0,
+        0,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 0,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S002",
+      "name": "불씨",
+      "file": "S002.png",
+      "atlasRect": [
+        36,
+        0,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 1,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S003",
+      "name": "냉기",
+      "file": "S003.png",
+      "atlasRect": [
+        72,
+        0,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 2,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S005",
+      "name": "밀침",
+      "file": "S005.png",
+      "atlasRect": [
+        144,
+        0,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 4,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S006",
+      "name": "장막",
+      "file": "S006.png",
+      "atlasRect": [
+        180,
+        0,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 5,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S007",
+      "name": "Incendio",
+      "file": "S007.png",
+      "atlasRect": [
+        216,
+        0,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 6,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S019",
+      "name": "Petrificus Totalus",
+      "file": "S019.png",
+      "atlasRect": [
+        144,
+        36,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 18,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S026",
+      "name": "Protego",
+      "file": "S026.png",
+      "atlasRect": [
+        396,
+        36,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 25,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S034",
+      "name": "Lumos",
+      "file": "S034.png",
+      "atlasRect": [
+        180,
+        72,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 33,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S035",
+      "name": "Nox",
+      "file": "S035.png",
+      "atlasRect": [
+        216,
+        72,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 34,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S036",
+      "name": "Accio",
+      "file": "S036.png",
+      "atlasRect": [
+        252,
+        72,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 35,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S037",
+      "name": "Alohomora",
+      "file": "S037.png",
+      "atlasRect": [
+        288,
+        72,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 36,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S038",
+      "name": "Reparo",
+      "file": "S038.png",
+      "atlasRect": [
+        324,
+        72,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 37,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "S039",
+      "name": "Wingardium Leviosa",
+      "file": "S039.png",
+      "atlasRect": [
+        360,
+        72,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 38,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I001",
+      "name": "소형 회복 물약",
+      "file": "I001.png",
+      "atlasRect": [
+        432,
+        144,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 68,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I003",
+      "name": "소형 마나 물약",
+      "file": "I003.png",
+      "atlasRect": [
+        0,
+        180,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 70,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I016",
+      "name": "룬 분필",
+      "file": "I016.png",
+      "atlasRect": [
+        468,
+        180,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 83,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I018",
+      "name": "투명 망토",
+      "file": "I018.png",
+      "atlasRect": [
+        36,
+        216,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 85,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I021",
+      "name": "생명 정수",
+      "file": "I021.png",
+      "atlasRect": [
+        144,
+        216,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 88,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I022",
+      "name": "마력 결정",
+      "file": "I022.png",
+      "atlasRect": [
+        180,
+        216,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 89,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I025",
+      "name": "주문서 낱장",
+      "file": "I025.png",
+      "atlasRect": [
+        288,
+        216,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 92,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I026",
+      "name": "펜던트 파편",
+      "file": "I026.png",
+      "atlasRect": [
+        324,
+        216,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 93,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I027",
+      "name": "지팡이 연마제",
+      "file": "I027.png",
+      "atlasRect": [
+        360,
+        216,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 94,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I030",
+      "name": "말린 마법약초 묶음",
+      "file": "I030.png",
+      "atlasRect": [
+        468,
+        216,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 97,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I031",
+      "name": "기본 지팡이 목재",
+      "file": "I031.png",
+      "atlasRect": [
+        0,
+        252,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 98,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I036",
+      "name": "빗자루 정비 키트",
+      "file": "I036.png",
+      "atlasRect": [
+        180,
+        252,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 103,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I040",
+      "name": "호그와트 승차권",
+      "file": "I040.png",
+      "atlasRect": [
+        324,
+        252,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 107,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I061",
+      "name": "마법사의 돌",
+      "file": "I061.png",
+      "atlasRect": [
+        72,
+        324,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 128,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "I064",
+      "name": "선택 수련권",
+      "file": "I064.png",
+      "atlasRect": [
+        180,
+        324,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 131,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "P001",
+      "name": "붉은 잉걸 펜던트",
+      "file": "P001.png",
+      "atlasRect": [
+        216,
+        324,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 132,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "P012",
+      "name": "룬 각인 펜던트",
+      "file": "P012.png",
+      "atlasRect": [
+        108,
+        360,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 143,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "P013",
+      "name": "철갑 매듭",
+      "file": "P013.png",
+      "atlasRect": [
+        144,
+        360,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 144,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "P019",
+      "name": "길잡이 나침반",
+      "file": "P019.png",
+      "atlasRect": [
+        360,
+        360,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 150,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "P025",
+      "name": "첫걸음의 매듭",
+      "file": "P025.png",
+      "atlasRect": [
+        72,
+        396,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 156,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "P026",
+      "name": "수선의 톱니",
+      "file": "P026.png",
+      "atlasRect": [
+        108,
+        396,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 157,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "P027",
+      "name": "체스말 왕관",
+      "file": "P027.png",
+      "atlasRect": [
+        144,
+        396,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 158,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "W001",
+      "name": "견습생의 지팡이",
+      "file": "W001.png",
+      "atlasRect": [
+        288,
+        432,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 176,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "W002",
+      "name": "물푸레나무 균형 지팡이",
+      "file": "W002.png",
+      "atlasRect": [
+        324,
+        432,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 177,
+      "status": "file_validated_runtime_pending"
+    },
+    {
+      "id": "W017",
+      "name": "소나무 생활 지팡이",
+      "file": "W017.png",
+      "atlasRect": [
+        360,
+        468,
+        36,
+        36
+      ],
+      "artMax": [
+        32,
+        32
+      ],
+      "padding": 2,
+      "canonicalIndex": 192,
+      "status": "file_validated_runtime_pending"
+    }
+  ]
+}

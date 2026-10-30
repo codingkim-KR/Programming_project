@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_FOREST",
+  "file": "fallen_wagon.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    0.36546189912272126,
+    0.8402563844529624,
+    -0.07661754835517953
+  ],
+  "bounds": {
+    "min": [
+      -0.8765498454206455,
+      0.0,
+      -0.7766175483551795
+    ],
+    "max": [
+      0.8765498454206455,
+      2.0415843894490773,
+      0.7766175483551795
+    ],
+    "size": [
+      1.753099690841291,
+      2.0415843894490773,
+      1.553235096710359
+    ]
+  },
+  "triangles": 240,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      1.0207921947245386,
+      0.0
+    ],
+    "size": [
+      1.753099690841291,
+      2.0415843894490773,
+      1.553235096710359
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

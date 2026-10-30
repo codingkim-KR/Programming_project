@@ -1,0 +1,125 @@
+{
+  "assetId": "CHR_NPC",
+  "name": "hooch",
+  "file": "hooch.glb",
+  "texture": "hooch_texture.png",
+  "textureSize": [
+    128,
+    128
+  ],
+  "bounds": [
+    [
+      -0.46828125000000004,
+      0.0,
+      -0.3409357846331918
+    ],
+    [
+      0.46828125000000004,
+      1.85,
+      0.50875
+    ]
+  ],
+  "height": 1.85,
+  "origin": "feet_center",
+  "forward": "+Z",
+  "up": "+Y",
+  "units": "T",
+  "joints": [
+    "root",
+    "hips",
+    "spine",
+    "chest",
+    "neck",
+    "head",
+    "upper_arm_l",
+    "forearm_l",
+    "hand_l",
+    "upper_arm_r",
+    "forearm_r",
+    "hand_r",
+    "thigh_l",
+    "shin_l",
+    "foot_l",
+    "thigh_r",
+    "shin_r",
+    "foot_r",
+    "wand_socket"
+  ],
+  "animations": [
+    {
+      "name": "idle",
+      "duration": 2,
+      "loop": true,
+      "inPlace": true
+    },
+    {
+      "name": "run",
+      "duration": 0.8,
+      "loop": true,
+      "inPlace": true
+    },
+    {
+      "name": "walk",
+      "duration": 1.2,
+      "loop": true,
+      "inPlace": true
+    },
+    {
+      "name": "guard",
+      "duration": 0.8,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "parry",
+      "duration": 0.4,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "hit",
+      "duration": 0.5,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "cast",
+      "duration": 0.65,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "interact",
+      "duration": 1,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "down",
+      "duration": 1.1,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "talk",
+      "duration": 1.6,
+      "loop": true,
+      "inPlace": true
+    }
+  ],
+  "collider": {
+    "type": "capsule",
+    "radius": 0.278,
+    "height": 1.85,
+    "center": [
+      0,
+      0.925,
+      0
+    ],
+    "source": "Proposed separate simplified collider, gameplay tuning pending"
+  },
+  "vertices": 3102,
+  "triangles": 1034,
+  "skinned": true,
+  "status": "first_pass_structurally_validated_runtime_pending"
+}

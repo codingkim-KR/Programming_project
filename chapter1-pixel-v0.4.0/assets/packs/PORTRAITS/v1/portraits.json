@@ -1,0 +1,734 @@
+[
+  {
+    "characterId": "ron",
+    "expression": "neutral",
+    "file": "ron_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "ron",
+    "expression": "tense",
+    "file": "ron_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "ron",
+    "expression": "sad",
+    "file": "ron_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "snape",
+    "expression": "neutral",
+    "file": "snape_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "snape",
+    "expression": "tense",
+    "file": "snape_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "snape",
+    "expression": "sad",
+    "file": "snape_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "quirrell",
+    "expression": "neutral",
+    "file": "quirrell_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "quirrell",
+    "expression": "tense",
+    "file": "quirrell_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "quirrell",
+    "expression": "sad",
+    "file": "quirrell_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "ollivander",
+    "expression": "neutral",
+    "file": "ollivander_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "ollivander",
+    "expression": "tense",
+    "file": "ollivander_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "ollivander",
+    "expression": "sad",
+    "file": "ollivander_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "filch",
+    "expression": "neutral",
+    "file": "filch_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "filch",
+    "expression": "tense",
+    "file": "filch_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "filch",
+    "expression": "sad",
+    "file": "filch_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "hagrid",
+    "expression": "neutral",
+    "file": "hagrid_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "hagrid",
+    "expression": "tense",
+    "file": "hagrid_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "hagrid",
+    "expression": "sad",
+    "file": "hagrid_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "mcgonagall",
+    "expression": "neutral",
+    "file": "mcgonagall_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "mcgonagall",
+    "expression": "tense",
+    "file": "mcgonagall_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "mcgonagall",
+    "expression": "sad",
+    "file": "mcgonagall_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "flitwick",
+    "expression": "neutral",
+    "file": "flitwick_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "flitwick",
+    "expression": "tense",
+    "file": "flitwick_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "flitwick",
+    "expression": "sad",
+    "file": "flitwick_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "sprout",
+    "expression": "neutral",
+    "file": "sprout_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "sprout",
+    "expression": "tense",
+    "file": "sprout_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "sprout",
+    "expression": "sad",
+    "file": "sprout_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "hooch",
+    "expression": "neutral",
+    "file": "hooch_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "hooch",
+    "expression": "tense",
+    "file": "hooch_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "hooch",
+    "expression": "sad",
+    "file": "hooch_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "repairer",
+    "expression": "neutral",
+    "file": "repairer_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "repairer",
+    "expression": "tense",
+    "file": "repairer_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "repairer",
+    "expression": "sad",
+    "file": "repairer_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "bookseller",
+    "expression": "neutral",
+    "file": "bookseller_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "bookseller",
+    "expression": "tense",
+    "file": "bookseller_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "bookseller",
+    "expression": "sad",
+    "file": "bookseller_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "apothecary",
+    "expression": "neutral",
+    "file": "apothecary_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "apothecary",
+    "expression": "tense",
+    "file": "apothecary_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "apothecary",
+    "expression": "sad",
+    "file": "apothecary_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "trolley_witch",
+    "expression": "neutral",
+    "file": "trolley_witch_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "trolley_witch",
+    "expression": "tense",
+    "file": "trolley_witch_tense.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "trolley_witch",
+    "expression": "sad",
+    "file": "trolley_witch_sad.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "characterId": "harry",
+    "expression": "neutral",
+    "file": "harry_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending",
+    "visualDesign": "user_supplied_alternate",
+    "matchesExisting3DModel": false
+  },
+  {
+    "characterId": "harry",
+    "expression": "happy",
+    "file": "harry_happy.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending",
+    "visualDesign": "user_supplied_alternate",
+    "matchesExisting3DModel": false
+  },
+  {
+    "characterId": "harry",
+    "expression": "determined",
+    "file": "harry_determined.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending",
+    "visualDesign": "user_supplied_alternate",
+    "matchesExisting3DModel": false
+  },
+  {
+    "characterId": "hermione",
+    "expression": "neutral",
+    "file": "hermione_neutral.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending",
+    "visualDesign": "user_supplied_alternate",
+    "matchesExisting3DModel": false
+  },
+  {
+    "characterId": "hermione",
+    "expression": "happy",
+    "file": "hermione_happy.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending",
+    "visualDesign": "user_supplied_alternate",
+    "matchesExisting3DModel": false
+  },
+  {
+    "characterId": "hermione",
+    "expression": "worried",
+    "file": "hermione_worried.png",
+    "size": [
+      192,
+      192
+    ],
+    "alpha": true,
+    "anchor": [
+      96,
+      184
+    ],
+    "status": "file_validated_runtime_pending",
+    "visualDesign": "user_supplied_alternate",
+    "matchesExisting3DModel": false
+  }
+]

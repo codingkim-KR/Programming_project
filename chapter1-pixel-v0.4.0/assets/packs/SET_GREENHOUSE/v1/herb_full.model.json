@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_GREENHOUSE",
+  "file": "herb_full.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.0015312144205873457,
+    -0.0,
+    -0.0
+  ],
+  "bounds": {
+    "min": [
+      -0.47435335826061165,
+      0.0,
+      -0.42797543233281915
+    ],
+    "max": [
+      0.47435335826061165,
+      1.19,
+      0.42797543233281915
+    ],
+    "size": [
+      0.9487067165212233,
+      1.19,
+      0.8559508646656383
+    ]
+  },
+  "triangles": 612,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      0.595,
+      0.0
+    ],
+    "size": [
+      0.9487067165212233,
+      1.19,
+      0.8559508646656383
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

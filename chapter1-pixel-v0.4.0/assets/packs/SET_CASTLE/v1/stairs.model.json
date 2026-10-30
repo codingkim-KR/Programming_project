@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_CASTLE",
+  "file": "stairs.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.0,
+    -0.0,
+    -0.9800000000000002
+  ],
+  "bounds": {
+    "min": [
+      -0.7,
+      0.0,
+      -1.1300000000000001
+    ],
+    "max": [
+      0.7,
+      1.9400842841368702,
+      1.1300000000000001
+    ],
+    "size": [
+      1.4,
+      1.9400842841368702,
+      2.2600000000000002
+    ]
+  },
+  "triangles": 376,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      0.9700421420684351,
+      0.0
+    ],
+    "size": [
+      1.4,
+      1.9400842841368702,
+      2.2600000000000002
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

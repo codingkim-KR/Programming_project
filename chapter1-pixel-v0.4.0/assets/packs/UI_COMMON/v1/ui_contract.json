@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "status": "file_validated_runtime_pending",
+  "nineSlice": {
+    "files": [
+      "dialogue_panel",
+      "menu_panel",
+      "input_panel",
+      "slot",
+      "selected_slot"
+    ],
+    "size": [
+      32,
+      32
+    ],
+    "borders": {
+      "left": 6,
+      "right": 6,
+      "top": 6,
+      "bottom": 6
+    }
+  },
+  "statusIconSize": [
+    24,
+    24
+  ],
+  "warningIconSize": [
+    32,
+    32
+  ],
+  "sampling": "nearest",
+  "textBakedIn": false,
+  "dialogue": {
+    "placement": "bottom_overlay",
+    "fullscreenWorld": true,
+    "advance": [
+      "Enter",
+      "Space"
+    ],
+    "spoilerProgressSidebar": false
+  },
+  "typing": {
+    "submit": "Enter",
+    "clearOnWrongSubmit": true
+  },
+  "telegraphs": {
+    "reflectable": "blue_circle",
+    "guardable": "yellow_cog",
+    "unblockable": "red_diagonal",
+    "worldGeometry": "Generate from the same game data used for hit detection; these icons do not define hitboxes."
+  }
+}

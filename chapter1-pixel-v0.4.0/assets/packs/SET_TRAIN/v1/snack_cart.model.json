@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_TRAIN",
+  "file": "snack_cart.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.0,
+    -0.0,
+    -0.0
+  ],
+  "bounds": {
+    "min": [
+      -0.52,
+      0.0,
+      -0.3
+    ],
+    "max": [
+      0.52,
+      1.1900000000000002,
+      0.3
+    ],
+    "size": [
+      1.04,
+      1.1900000000000002,
+      0.6
+    ]
+  },
+  "triangles": 340,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      0.5950000000000001,
+      0.0
+    ],
+    "size": [
+      1.04,
+      1.1900000000000002,
+      0.6
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

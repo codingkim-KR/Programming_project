@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_FOREST",
+  "file": "oak_tree.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.03177771263223805,
+    0.029944490697915424,
+    -0.06263067666617983
+  ],
+  "bounds": {
+    "min": [
+      -2.068222287367762,
+      0.0,
+      -2.0213640263211263
+    ],
+    "max": [
+      2.068222287367762,
+      4.029944490697916,
+      2.0213640263211263
+    ],
+    "size": [
+      4.136444574735524,
+      4.029944490697916,
+      4.042728052642253
+    ]
+  },
+  "triangles": 548,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      2.014972245348958,
+      0.0
+    ],
+    "size": [
+      4.136444574735524,
+      4.029944490697916,
+      4.042728052642253
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

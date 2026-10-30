@@ -1,0 +1,27 @@
+{
+  "assetId": "FX_FIRE",
+  "role": "large_impact_variant",
+  "file": "impact_large_sheet.png",
+  "size": [
+    512,
+    256
+  ],
+  "frameSize": [
+    128,
+    128
+  ],
+  "frameCount": 8,
+  "columns": 4,
+  "rows": 2,
+  "order": "row_major",
+  "fps": 12,
+  "loop": false,
+  "anchor": [
+    64,
+    64
+  ],
+  "blend": "normal_premultiplied_alpha",
+  "source": "Same original high-resolution generated artwork as small impact; independently sampled at128px, not upscaled from64px.",
+  "status": "file_validated_runtime_pending",
+  "collision": "Timing and damage remain independent gameplay data."
+}

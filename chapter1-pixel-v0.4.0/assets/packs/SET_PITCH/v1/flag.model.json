@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_PITCH",
+  "file": "flag.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.41671302192966964,
+    -0.0,
+    -0.0
+  ],
+  "bounds": {
+    "min": [
+      -0.4832869780703304,
+      0.0,
+      -0.06331559480312317
+    ],
+    "max": [
+      0.4832869780703304,
+      2.94,
+      0.06331559480312317
+    ],
+    "size": [
+      0.9665739561406608,
+      2.94,
+      0.12663118960624634
+    ]
+  },
+  "triangles": 126,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      1.47,
+      0.0
+    ],
+    "size": [
+      0.9665739561406608,
+      2.94,
+      0.12663118960624634
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

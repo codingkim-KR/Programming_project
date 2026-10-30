@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_CASTLE",
+  "file": "washbasin_shattered.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.0,
+    -0.0,
+    -0.002124591408183968
+  ],
+  "bounds": {
+    "min": [
+      -0.69,
+      0.0,
+      -0.38288988509513133
+    ],
+    "max": [
+      0.69,
+      0.9,
+      0.38288988509513133
+    ],
+    "size": [
+      1.38,
+      0.9,
+      0.7657797701902627
+    ]
+  },
+  "triangles": 128,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      0.45,
+      0.0
+    ],
+    "size": [
+      1.38,
+      0.9,
+      0.7657797701902627
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

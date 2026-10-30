@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "characters": {
+    "harry": {
+      "tense": "determined",
+      "sad": "neutral"
+    },
+    "hermione": {
+      "tense": "worried",
+      "sad": "worried"
+    }
+  },
+  "defaultExpression": "neutral",
+  "note": "Aliases are intentional visual fallbacks, not additional expressions; these alternate portraits do not contain a sad pose."
+}

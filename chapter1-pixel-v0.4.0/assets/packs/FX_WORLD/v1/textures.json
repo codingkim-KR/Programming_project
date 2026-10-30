@@ -1,0 +1,122 @@
+[
+  {
+    "name": "snowflake",
+    "file": "snowflake.png",
+    "size": [
+      32,
+      32
+    ],
+    "anchor": [
+      16,
+      16
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "name": "snow_dot",
+    "file": "snow_dot.png",
+    "size": [
+      32,
+      32
+    ],
+    "anchor": [
+      16,
+      16
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "name": "rain_streak",
+    "file": "rain_streak.png",
+    "size": [
+      32,
+      32
+    ],
+    "anchor": [
+      16,
+      16
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "name": "dust_mote",
+    "file": "dust_mote.png",
+    "size": [
+      32,
+      32
+    ],
+    "anchor": [
+      16,
+      16
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "name": "fog_wisp",
+    "file": "fog_wisp.png",
+    "size": [
+      64,
+      64
+    ],
+    "anchor": [
+      32,
+      32
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "name": "dust_puff",
+    "file": "dust_puff.png",
+    "size": [
+      64,
+      64
+    ],
+    "anchor": [
+      32,
+      32
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "name": "water_drop",
+    "file": "water_drop.png",
+    "size": [
+      32,
+      32
+    ],
+    "anchor": [
+      16,
+      16
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  },
+  {
+    "name": "ripple",
+    "file": "ripple.png",
+    "size": [
+      128,
+      128
+    ],
+    "anchor": [
+      64,
+      64
+    ],
+    "alpha": true,
+    "filter": "nearest",
+    "status": "file_validated_runtime_pending"
+  }
+]

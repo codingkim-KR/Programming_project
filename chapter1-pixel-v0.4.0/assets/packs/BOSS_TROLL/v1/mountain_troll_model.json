@@ -1,0 +1,149 @@
+{
+  "assetId": "BOSS_TROLL",
+  "name": "mountain_troll",
+  "file": "mountain_troll.glb",
+  "texture": "mountain_troll_texture.png",
+  "textureSize": [
+    256,
+    256
+  ],
+  "bounds": [
+    [
+      -2.1992351381604514,
+      0.0,
+      -0.7124999999999999
+    ],
+    [
+      2.2733445338512537,
+      4.0,
+      2.475
+    ]
+  ],
+  "height": 4.0,
+  "origin": "feet_center",
+  "forward": "+Z",
+  "up": "+Y",
+  "units": "T",
+  "joints": [
+    "root",
+    "hips",
+    "spine",
+    "chest",
+    "neck",
+    "head",
+    "upper_arm_l",
+    "forearm_l",
+    "hand_l",
+    "upper_arm_r",
+    "forearm_r",
+    "hand_r",
+    "thigh_l",
+    "shin_l",
+    "foot_l",
+    "thigh_r",
+    "shin_r",
+    "foot_r",
+    "wand_socket"
+  ],
+  "animations": [
+    {
+      "name": "idle",
+      "duration": 2,
+      "loop": true,
+      "inPlace": true
+    },
+    {
+      "name": "run",
+      "duration": 0.8,
+      "loop": true,
+      "inPlace": true
+    },
+    {
+      "name": "walk",
+      "duration": 1.2,
+      "loop": true,
+      "inPlace": true
+    },
+    {
+      "name": "guard",
+      "duration": 0.8,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "parry",
+      "duration": 0.4,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "hit",
+      "duration": 0.5,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "cast",
+      "duration": 0.65,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "interact",
+      "duration": 1,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "down",
+      "duration": 1.1,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "talk",
+      "duration": 1.6,
+      "loop": true,
+      "inPlace": true
+    },
+    {
+      "name": "slam",
+      "duration": 1.8,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "sweep",
+      "duration": 1.5,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "collision",
+      "duration": 0.9,
+      "loop": false,
+      "inPlace": true
+    },
+    {
+      "name": "stun",
+      "duration": 2,
+      "loop": true,
+      "inPlace": true
+    }
+  ],
+  "collider": {
+    "type": "capsule",
+    "radius": 0.99,
+    "height": 4,
+    "center": [
+      0,
+      2.0,
+      0
+    ],
+    "source": "Proposed separate simplified collider, gameplay tuning pending"
+  },
+  "vertices": 4602,
+  "triangles": 1534,
+  "skinned": true,
+  "status": "first_pass_structurally_validated_runtime_pending"
+}

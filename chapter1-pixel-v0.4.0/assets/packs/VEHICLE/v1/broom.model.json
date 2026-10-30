@@ -1,0 +1,89 @@
+{
+  "assetId": "VEHICLE",
+  "file": "broom.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.004799332534123818,
+    0.036724572906811095,
+    0.2003903162234053
+  ],
+  "bounds": {
+    "min": [
+      -0.26277528198360933,
+      0.0,
+      -1.0024455869917068
+    ],
+    "max": [
+      0.26277528198360933,
+      0.3412442049168919,
+      1.0024455869917068
+    ],
+    "size": [
+      0.5255505639672187,
+      0.3412442049168919,
+      2.0048911739834137
+    ]
+  },
+  "triangles": 976,
+  "animations": [
+    {
+      "name": "lean_left",
+      "duration": 0.65,
+      "loop": false
+    },
+    {
+      "name": "lean_right",
+      "duration": 0.65,
+      "loop": false
+    },
+    {
+      "name": "turn_left",
+      "duration": 0.65,
+      "loop": false
+    },
+    {
+      "name": "turn_right",
+      "duration": 0.65,
+      "loop": false
+    },
+    {
+      "name": "accelerate",
+      "duration": 0.65,
+      "loop": false
+    },
+    {
+      "name": "collision_react",
+      "duration": 0.4,
+      "loop": false
+    },
+    {
+      "name": "landing",
+      "duration": 0.75,
+      "loop": false
+    }
+  ],
+  "texture": "vehicle_atlas.png",
+  "textureSize": [
+    256,
+    256
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      0.17062210245844595,
+      0.0
+    ],
+    "size": [
+      0.5255505639672187,
+      0.3412442049168919,
+      2.0048911739834137
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

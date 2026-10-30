@@ -1,0 +1,53 @@
+{
+  "assetId": "SET_GREENHOUSE",
+  "file": "repair_machine_broken.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.013955767741969438,
+    -0.0,
+    -0.06500000000000003
+  ],
+  "bounds": {
+    "min": [
+      -0.7899874226802082,
+      0.0,
+      -0.485
+    ],
+    "max": [
+      0.7899874226802082,
+      1.26,
+      0.485
+    ],
+    "size": [
+      1.5799748453604163,
+      1.26,
+      0.97
+    ]
+  },
+  "triangles": 784,
+  "animations": [],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      0.63,
+      0.0
+    ],
+    "size": [
+      1.5799748453604163,
+      1.26,
+      0.97
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}

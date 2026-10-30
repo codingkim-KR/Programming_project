@@ -1,0 +1,64 @@
+{
+  "assetId": "SET_CASTLE",
+  "file": "hinged_door.glb",
+  "unit": "1T=1 world unit",
+  "up": "+Y",
+  "forward": "+Z",
+  "origin": "base_center",
+  "authoredRootOffset": [
+    -0.0,
+    -0.0,
+    -0.015590169943749482
+  ],
+  "bounds": {
+    "min": [
+      -0.675,
+      0.0,
+      -0.14059016994374948
+    ],
+    "max": [
+      0.675,
+      2.375,
+      0.14059016994374948
+    ],
+    "size": [
+      1.35,
+      2.375,
+      0.28118033988749896
+    ]
+  },
+  "triangles": 152,
+  "animations": [
+    {
+      "name": "open",
+      "duration": 1,
+      "loop": false
+    },
+    {
+      "name": "close",
+      "duration": 1,
+      "loop": false
+    }
+  ],
+  "texture": "environment_atlas.png",
+  "textureSize": [
+    512,
+    512
+  ],
+  "status": "file_validated_runtime_pending",
+  "style": "Procedurally authored low-poly first pass; less detailed than the concept sheets.",
+  "collision": {
+    "type": "aabb",
+    "center": [
+      0.0,
+      1.1875,
+      0.0
+    ],
+    "size": [
+      1.35,
+      2.375,
+      0.28118033988749896
+    ],
+    "use": "Initial broadphase only. Doors, stairs, hoops, foliage and hollow models need the supplied semantic collider parts or engine authoring."
+  }
+}
