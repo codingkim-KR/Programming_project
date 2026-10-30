@@ -6,8 +6,11 @@
   <meta name="theme-color" content="#0c1422">
   <title>LUMOS — 마법사의 돌에서 혼혈 왕자까지</title>
   <meta name="description" content="한 글자씩, 마법이 됩니다. 영어 주문을 입력하며 탐험하는 2D 도트 RPG. 마법사의 돌에서 혼혈 왕자까지 1–6챕터.">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="immersive.css">
+  <link rel="stylesheet" href="runtime/styles-512f1698cc5d.css">
+  <!-- runtime-preload:start -->
+  <link rel="modulepreload" href="runtime/game-5MZWKD5K.js">
+  <link rel="modulepreload" href="runtime/ch01-WQI36CSE.js">
+  <!-- runtime-preload:end -->
 </head>
 <body class="on-title">
   <header class="topbar">
@@ -26,7 +29,7 @@
         <canvas id="world" width="640" height="360" tabindex="0" aria-label="2D 도트 게임 화면. 화살표 이동, 영어 주문 입력 후 Enter, Space 방어"></canvas>
         <div class="vignette" aria-hidden="true"></div>
         <div class="viewport-top"><span class="scene-location" id="location-badge">1-01 · 폭풍 속의 초대</span><span id="mode-badge" class="mode-badge">탐험</span></div>
-        <div class="player-hud" id="player-hud"><div class="avatar"><img id="player-portrait" alt="해리" width="48" height="48" draggable="false"></div><div class="vitals"><div class="vital-label"><span>HARRY</span><span id="hp-value">100 / 100</span></div><div class="meter health"><i id="hp-bar"></i></div><div class="mana-row"><span>마나</span><div class="meter mana"><i id="mana-bar"></i></div><span id="mana-value">60</span></div></div></div>
+        <div class="player-hud" id="player-hud"><div class="avatar"><img id="player-portrait" decoding="async" alt="해리" width="48" height="48" draggable="false"></div><div class="vitals"><div class="vital-label"><span>HARRY</span><span id="hp-value">100 / 100</span></div><div class="meter health"><i id="hp-bar"></i></div><div class="mana-row"><span>마나</span><div class="meter mana"><i id="mana-bar"></i></div><span id="mana-value">60</span></div></div></div>
         <div id="boss-hud" class="boss-hud" hidden><span id="boss-name"></span><small id="boss-phase"></small><div class="meter boss"><i id="boss-bar"></i></div></div>
         <div id="nameplates" class="nameplates" aria-hidden="true"></div>
         <div id="guide-pointer" class="guide-pointer" aria-hidden="true" hidden></div>
@@ -36,7 +39,7 @@
         <div id="viewport-hint" class="viewport-hint">화살표로 움직여 반짝이는 표식에 다가가세요</div>
         <button id="exit-button" class="exit-button" hidden>다음 이야기로 <span>→</span></button>
         <section id="dialogue-box" class="dialogue-box" role="region" aria-label="대화" hidden>
-          <img id="dialogue-portrait" class="dialogue-portrait" alt="" width="192" height="192" draggable="false" hidden>
+          <img id="dialogue-portrait" decoding="async" class="dialogue-portrait" alt="" width="192" height="192" draggable="false" hidden>
           <div id="dialogue-speaker" class="dialogue-speaker"></div>
           <p id="dialogue-text" class="dialogue-copy" aria-live="polite"></p>
           <div id="dialogue-choices" class="dialogue-choices" role="group" aria-label="대답 선택" hidden></div>
@@ -67,7 +70,7 @@
   </main>
 
   <section id="title-screen" class="title-screen" aria-label="시작 화면">
-    <div class="title-art"></div><div class="title-content"><div class="title-overline"><i></i> YEARS I — VI <i></i></div><h1>LUMOS</h1><p class="title-korean">한 글자씩,<br>마법이 됩니다.</p><p class="title-description">낯선 편지 한 장에서 시작된 이야기.<br>주문을 입력하고, 성을 탐험하고,<br>마법사의 돌에서 혼혈 왕자까지.</p><div class="title-buttons"><button id="continue-button" class="primary-button" hidden>여정 이어하기 <span>→</span></button><button id="new-game-button" class="primary-button">새로운 여정 <span>→</span></button></div><button id="title-help" class="text-button">플레이 방법 알아보기 ↗</button></div>
+    <div class="title-art"></div><div class="title-content"><div class="title-overline"><i></i> YEARS I — VI <i></i></div><h1>LUMOS</h1><p class="title-korean">한 글자씩,<br>마법이 됩니다.</p><p class="title-description">낯선 편지 한 장에서 시작된 이야기.<br>주문을 입력하고, 성을 탐험하고,<br>마법사의 돌에서 혼혈 왕자까지.</p><p id="title-loading" class="title-loading" role="status">여정을 준비하고 있습니다…</p><div class="title-buttons"><button id="continue-button" class="primary-button" disabled hidden>여정 이어하기 <span>→</span></button><button id="new-game-button" class="primary-button" disabled>새로운 여정 <span>→</span></button></div><button id="title-help" class="text-button">플레이 방법 알아보기 ↗</button></div>
     <div class="title-caption"><span class="caption-line"></span><p>CHAPTERS Ⅰ — Ⅵ<br><strong>혼혈 왕자까지</strong><small>여섯 해의 이야기 · 직접 입력하는 마법</small></p></div>
     <div class="title-bottom"><span>Enter 시작 <span>·</span> 화살표 이동 <span>·</span> Space 대화 / 방어</span><span>제1–6장 · 2D PIXEL EDITION</span></div>
   </section>
@@ -76,6 +79,6 @@
   <div id="toast-stack" class="toast-stack" role="status" aria-live="polite"></div>
   <dialog id="modal" class="modal"><button id="modal-close" class="modal-close" aria-label="닫기">×</button><div class="modal-ornament">✧</div><span class="eyebrow" id="modal-kicker"></span><h2 id="modal-title"></h2><div id="modal-body"></div><div id="modal-actions" class="modal-actions"></div></dialog>
   <input id="import-file" type="file" accept="application/json,.json" hidden>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="runtime/game-5MZWKD5K.js"></script>
 </body>
 </html>

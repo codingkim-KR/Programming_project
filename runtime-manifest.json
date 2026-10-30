@@ -1,0 +1,68 @@
+{
+  "version": "0.7.1",
+  "entry": "runtime/game-5MZWKD5K.js",
+  "stylesheet": "runtime/styles-512f1698cc5d.css",
+  "initialModules": [
+    "runtime/game-5MZWKD5K.js",
+    "runtime/ch01-WQI36CSE.js"
+  ],
+  "chapters": {
+    "ch01": "runtime/ch01-WQI36CSE.js",
+    "ch02": "runtime/ch02-26GOTZOL.js",
+    "ch03": "runtime/ch03-ZK7HHYKD.js",
+    "ch04": "runtime/ch04-W2UWBSN3.js",
+    "ch05": "runtime/ch05-HULOPKWH.js",
+    "ch06": "runtime/ch06-G7WO6C2L.js"
+  },
+  "files": [
+    {
+      "path": "runtime/game-5MZWKD5K.js",
+      "bytes": 280188,
+      "gzipBytes": 96751
+    },
+    {
+      "path": "runtime/ch01-WQI36CSE.js",
+      "bytes": 26760,
+      "gzipBytes": 9997
+    },
+    {
+      "path": "runtime/ch02-26GOTZOL.js",
+      "bytes": 36990,
+      "gzipBytes": 13820
+    },
+    {
+      "path": "runtime/ch03-ZK7HHYKD.js",
+      "bytes": 17663,
+      "gzipBytes": 7694
+    },
+    {
+      "path": "runtime/ch04-W2UWBSN3.js",
+      "bytes": 18005,
+      "gzipBytes": 7741
+    },
+    {
+      "path": "runtime/ch05-HULOPKWH.js",
+      "bytes": 21292,
+      "gzipBytes": 9169
+    },
+    {
+      "path": "runtime/ch06-G7WO6C2L.js",
+      "bytes": 23983,
+      "gzipBytes": 10017
+    },
+    {
+      "path": "runtime/chunk-T76TPQQR.js",
+      "bytes": 3167,
+      "gzipBytes": 1627
+    },
+    {
+      "path": "runtime/styles-512f1698cc5d.css",
+      "bytes": 59172,
+      "gzipBytes": 13216
+    }
+  ],
+  "initialJsBytes": 306948,
+  "initialJsGzipBytes": 106748,
+  "buildTool": "esbuild",
+  "sourceEntry": "js/main.js"
+}
