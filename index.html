@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0c1422">
-  <title>LUMOS — 마법사의 돌</title>
-  <meta name="description" content="한 글자씩, 마법이 됩니다. 영어 주문을 입력하며 탐험하는 마법사의 돌 첫 번째 이야기.">
+  <title>LUMOS — 마법사의 돌에서 혼혈 왕자까지</title>
+  <meta name="description" content="한 글자씩, 마법이 됩니다. 영어 주문을 입력하며 탐험하는 2D 도트 RPG. 마법사의 돌에서 혼혈 왕자까지 1–6챕터.">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="immersive.css">
 </head>
@@ -15,7 +15,7 @@
       <svg class="brand-mark" viewBox="0 0 40 48" aria-hidden="true"><path d="M20 2 37 11v17c0 8-9 15-17 18C12 43 3 36 3 28V11Z"/><path d="m20 9 3 13 10 3-10 3-3 12-3-12-10-3 10-3Z"/></svg>
       <span>LUMOS<small>A TYPING ADVENTURE</small></span>
     </a>
-    <div class="chapter-header"><span class="chapter-tag">CHAPTER Ⅰ</span><span>마법사의 돌</span></div>
+    <div class="chapter-header"><span class="chapter-tag" id="campaign-label">CHAPTERS Ⅰ — Ⅵ</span><span id="campaign-subtitle">마법사의 돌에서 혼혈 왕자까지</span></div>
     <div class="top-actions"><span id="save-status" class="save-status"><i></i>기기 저장 준비 중</span><button class="icon-button" id="book-button" aria-label="주문서와 가방 · ` 키" title="주문서와 가방 · ` 키">▤</button><button class="icon-button" id="fullscreen-button" aria-label="전체 화면 · F10" title="전체 화면 · F10">⛶</button><button class="icon-button" id="settings-button" aria-label="설정 및 저장">⚙</button><button class="icon-button" id="pause-button" aria-label="일시정지 · Esc">Ⅱ</button></div>
   </header>
 
@@ -31,6 +31,7 @@
         <div id="nameplates" class="nameplates" aria-hidden="true"></div>
         <div id="guide-pointer" class="guide-pointer" aria-hidden="true" hidden></div>
         <div id="interact-prompt" class="interact-prompt" hidden><button id="interact-button"><kbd>Enter</kbd><span id="interact-text">대화하기</span></button></div>
+        <div id="combat-cue" class="combat-cue" hidden></div>
         <div id="guard-indicator" class="guard-indicator" hidden>◇ 방어 중 <span id="guard-value"></span></div>
         <div id="viewport-hint" class="viewport-hint">화살표로 움직여 반짝이는 표식에 다가가세요</div>
         <button id="exit-button" class="exit-button" hidden>다음 이야기로 <span>→</span></button>
@@ -45,7 +46,7 @@
         <div id="loading" class="loading" role="status" aria-live="polite"><span class="loading-sigil" aria-hidden="true">✧</span><p id="loading-text">장면을 준비하고 있습니다</p></div>
         <div id="fatal-error" class="fatal-error" hidden><h2>게임을 불러오지 못했습니다</h2><p id="fatal-message"></p><button onclick="location.reload()">다시 불러오기</button></div>
       </div>
-      <div class="objective-strip"><span class="objective-icon">◇</span><div><span class="eyebrow">CURRENT OBJECTIVE</span><p id="current-objective">편지를 읽고 새로운 여정을 준비하세요.</p></div><span id="objective-count">0 / 2</span></div>
+      <div class="objective-strip"><span class="objective-icon">◇</span><div><span class="eyebrow">CURRENT OBJECTIVE</span><p id="current-objective">편지를 읽고 새로운 여정을 준비하세요.</p><div id="status-effects" class="status-effects" role="status" hidden></div></div><span id="objective-count">0 / 2</span></div>
       <div class="spell-console" id="spell-console">
         <div class="spell-input-label"><label for="spell-input">주문을 입력하세요</label><span id="spell-feedback">영어 주문 · 공백 없이</span></div>
         <div class="spell-input-row"><span class="wand-icon">✦</span><input id="spell-input" maxlength="48" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="영어 주문 입력" placeholder="lumos"><button id="cast-button">시전 <kbd>Enter</kbd></button></div>
@@ -56,21 +57,22 @@
 
     <aside class="spellbook" aria-label="주문과 소지품">
       <button id="book-close" class="book-close" aria-label="주문서 닫기 · Esc">닫기 <kbd>Esc</kbd></button>
-      <div class="book-tabs" role="tablist"><button id="tab-spells" class="active" role="tab" aria-selected="true">주문서</button><button id="tab-inventory" role="tab" aria-selected="false">소지품</button></div>
-      <section id="spells-panel"><div class="book-title"><span>배운 주문</span><small id="learned-count">0 SPELLS</small></div><div id="spell-list" class="spell-list"></div><div class="book-note">주문 카드를 누르면 사용법을 볼 수 있습니다.<br>주문은 직접 입력하여 시전합니다.</div></section>
-      <section id="inventory-panel" hidden><div class="book-title"><span>나의 가방</span><small><b id="gold-value">0</b> G</small></div><div id="equipment-list"></div><div id="inventory-list" class="inventory-list"></div></section>
+      <div class="book-tabs" role="tablist" aria-label="주문서와 소지품"><button id="tab-spells" class="active" role="tab" aria-selected="true" aria-controls="spells-panel">주문서</button><button id="tab-inventory" role="tab" aria-selected="false" aria-controls="inventory-panel">소지품</button><button id="tab-pendants" role="tab" aria-selected="false" aria-controls="pendants-panel">펜던트</button></div>
+      <section id="spells-panel" role="tabpanel" aria-labelledby="tab-spells"><div class="book-title"><span>배운 주문</span><small id="learned-count">0 SPELLS</small></div><div id="spell-list" class="spell-list"></div><div class="book-note">주문 카드를 누르면 사용법을 볼 수 있습니다.<br>주문은 직접 입력하여 시전합니다.</div></section>
+      <section id="inventory-panel" role="tabpanel" aria-labelledby="tab-inventory" hidden><div class="book-title"><span>나의 가방</span><small><b id="gold-value">0</b> G</small></div><div id="equipment-list"></div><div id="inventory-list" class="inventory-list"></div></section>
+      <section id="pendants-panel" role="tabpanel" aria-labelledby="tab-pendants" hidden><div class="book-title"><span>장착 중인 펜던트</span><small id="pendant-count">0 / 3</small></div><div id="pendant-slots" class="pendant-slots" role="group" aria-label="펜던트 장착 자리"></div><div class="pendant-selection"><p id="pendant-selection-label" aria-live="polite"></p><button id="pendant-unequip" class="text-button">선택 자리 해제</button></div><p class="pendant-instruction">바꿀 자리를 고른 뒤, 아래에서 펜던트를 선택하세요.</p><div class="pendant-owned-heading">보유 펜던트 <small id="pendant-owned-count"></small></div><div id="pendant-list" class="pendant-list"></div><p class="pendant-key-hint">PageUp / PageDown 탭 이동 · 방향키 선택 · Enter 장착 · F3/F4/F5 사용형 펜던트</p></section>
       <div class="quick-items"><span class="eyebrow">QUICK ITEMS</span><div id="quick-items-list"></div></div>
       <button id="help-button" class="help-button"><span>?</span> 마법사 안내서 <span>↗</span></button>
     </aside>
   </main>
 
   <section id="title-screen" class="title-screen" aria-label="시작 화면">
-    <div class="title-art"></div><div class="title-content"><div class="title-overline"><i></i> THE FIRST YEAR <i></i></div><h1>LUMOS</h1><p class="title-korean">한 글자씩,<br>마법이 됩니다.</p><p class="title-description">낯선 편지 한 장에서 시작된 이야기.<br>주문을 입력하고, 성을 탐험하고,<br>마법사의 돌에 숨겨진 비밀을 만나세요.</p><div class="title-buttons"><button id="continue-button" class="primary-button" hidden>여정 이어하기 <span>→</span></button><button id="new-game-button" class="primary-button">새로운 여정 <span>→</span></button></div><button id="title-help" class="text-button">플레이 방법 알아보기 ↗</button></div>
-    <div class="title-caption"><span class="caption-line"></span><p>CHAPTER Ⅰ<br><strong>마법사의 돌</strong><small>12개의 이야기 · 직접 입력하는 마법</small></p></div>
-    <div class="title-bottom"><span>Enter 시작 <span>·</span> 화살표 이동 <span>·</span> Space 대화 / 방어</span><span>제1장 · 2D PIXEL EDITION</span></div>
+    <div class="title-art"></div><div class="title-content"><div class="title-overline"><i></i> YEARS I — VI <i></i></div><h1>LUMOS</h1><p class="title-korean">한 글자씩,<br>마법이 됩니다.</p><p class="title-description">낯선 편지 한 장에서 시작된 이야기.<br>주문을 입력하고, 성을 탐험하고,<br>마법사의 돌에서 혼혈 왕자까지.</p><div class="title-buttons"><button id="continue-button" class="primary-button" hidden>여정 이어하기 <span>→</span></button><button id="new-game-button" class="primary-button">새로운 여정 <span>→</span></button></div><button id="title-help" class="text-button">플레이 방법 알아보기 ↗</button></div>
+    <div class="title-caption"><span class="caption-line"></span><p>CHAPTERS Ⅰ — Ⅵ<br><strong>혼혈 왕자까지</strong><small>여섯 해의 이야기 · 직접 입력하는 마법</small></p></div>
+    <div class="title-bottom"><span>Enter 시작 <span>·</span> 화살표 이동 <span>·</span> Space 대화 / 방어</span><span>제1–6장 · 2D PIXEL EDITION</span></div>
   </section>
 
-  <footer class="footer"><span>CHAPTER Ⅰ <i>✧</i> THE PHILOSOPHER’S STONE</span><span><kbd>↑ ↓ ← →</kbd> 이동 <span>·</span> <kbd>Tab</kbd> 표적 변경</span><button id="audio-button" aria-pressed="true">♪ 소리 켜짐</button></footer>
+  <footer class="footer"><span>YEARS Ⅰ — Ⅵ <i>✧</i> LUMOS</span><span><kbd>↑ ↓ ← →</kbd> 이동 <span>·</span> <kbd>Tab</kbd> 표적 변경</span><button id="audio-button" aria-pressed="true">♪ 소리 켜짐</button></footer>
   <div id="toast-stack" class="toast-stack" role="status" aria-live="polite"></div>
   <dialog id="modal" class="modal"><button id="modal-close" class="modal-close" aria-label="닫기">×</button><div class="modal-ornament">✧</div><span class="eyebrow" id="modal-kicker"></span><h2 id="modal-title"></h2><div id="modal-body"></div><div id="modal-actions" class="modal-actions"></div></dialog>
   <input id="import-file" type="file" accept="application/json,.json" hidden>

@@ -1,0 +1,113 @@
+import {L,R,choice,talk as T,cast as C,wave as W,ring as F,hold as H,makeScene} from './chapter-tools.js';
+const S=(n,name,theme,options,steps)=>makeScene(4,n,name,theme,options,steps);
+const D=(...lines)=>lines.map(([a,b])=>L(a,b));
+const ten=[[15,18],[19,20],[23,17],[27,21],[31,18],[17,11],[22,9],[27,12],[32,9],[35,14]];
+export const CHAPTER={id:'ch04',title:'불의 잔',subtitle:'돌아갈 길을 놓지 않는 마음',version:'0.6.0',scenes:[
+ S(1,'월드컵의 야영지','camp',{width:60,depth:38,spawn:{x:5,z:31},exit:{x:54,z:6},rest:true,grantSpells:['S060','S061'],blockers:[{x:19,z:13,w:7,d:6},{x:40,z:25,w:7,d:6}],entryDialogue:D(['론','이 텐트 안에 방이 몇 개야? 우리 집보다 넓잖아.'],['헤르미온느','경기 전에 장터부터 가 보자. 늦으면 사람들로 꽉 찰 거야.'])},[
+  T('portkey','해진 장화',9,30,D(['아서','돌아갈 때도 모이는 장소를 기억해 둬라.']),{kind:'book',reward:R(0,{I020:1})}),
+  C('speaker','sonorus로 장터 방송을 켜세요',23,29,'S060','harp'),
+  C('quiet','quietus로 울림을 낮추세요',29,19,'S061','harp'),
+  T('market','순회 장터 상인',44,13,D(['상인','새 학교 친구들한테도 이 연락처를 전해 줘요. 학교 교환회로 물건을 보낼 수 있으니까.']),{kind:'shopkeeper',shopId:'SH11',reward:R(180,{I002:2,I004:2})}),
+  T('match','아서 위즐리',52,7,D(['아서','입장할 시간이구나. 표는 내가 갖고 있다.'],['해리','저 위에 앉는다고요? 경기장이 정말 커요.']))
+ ]),
+ S(2,'불타는 야영지','camp',{width:64,depth:36,spawn:{x:5,z:29},exit:{x:58,z:6},grantSpells:['S014'],blockers:[{x:18,z:14,w:8,d:6},{x:39,z:24,w:8,d:6}],temporarySupplies:{SUP_I002:2,SUP_I004:2},entryDialogue:D(['아서','아이들은 숲 쪽으로! 서로 놓치지 마라!'],['해리','저 텐트 안에 사람이 있어. 불부터 꺼야 해.'])},[
+  C('fire','aguamenti로 텐트 앞 불길을 끄세요',12,27,'S014','tent'),
+  T('child','길 잃은 아이',22,25,D(['아이','엄마가 어디 있는지 모르겠어요.'],['헤르미온느','내 손 잡아. 저 등불 아래에서 기다리자.']),{kind:'student',hiddenAfter:['4-02.family']}),
+  W('raiders','야영지의 가면 마법사','death-eater',[[28,18],[32,15],[36,17],[32,10],[40,10],[44,16]],{hp:82,damage:20}),
+  C('rubble','reparo로 대피로의 다리를 고치세요',48,20,'S038','machine'),
+  T('family','등불 아래 가족',55,11,D(['아이의 어머니','여기 있었구나! 도와줘서 고마워요.'],['해리','저 위의 초록빛 표식… 모두가 저걸 보고 도망가요.']),{kind:'student',reward:R(140,{I009:2})})
+ ]),
+ S(3,'세 학교의 도착','castle',{width:52,depth:32,spawn:{x:5,z:25},exit:{x:47,z:5},rest:true,grantSpells:['S021']},[
+  T('visitors','세드릭',12,23,D(['세드릭','다른 학교 학생들도 훈련장을 같이 쓸 거래. 먼저 인사하러 갈래?'],['해리','좋아. 다들 우리 성이 낯설겠지.']),{kind:'cedric'}),
+  T('moody','무디 교수',25,17,D(['무디 교수','눈에 보이는 공격만 믿지 마라. 조준을 흐트러뜨리는 방법도 알아야 한다.']),{kind:'moody'}),
+  C('confusion','confundo로 연습 인형의 조준을 흐트러뜨리세요',35,13,'S021','target'),
+  T('cup','불의 잔',45,7,D(['헤르미온느','나이 제한선이 있어. 해리, 괜한 생각은 하지 마.'],['해리','난 이름을 넣을 생각 없어.']),{kind:'cup',reward:R(90)})
+ ]),
+ S(4,'네 번째 선수','castle',{width:30,depth:26,rest:true,entryDialogue:D(['덤블도어','해리 포터.'],['해리','전 이름을 넣지 않았어요. 정말이에요.'])},[
+  T('ron','론',9,19,D(['론','넣을 방법을 찾았으면 나한테는 말해 줄 수도 있었잖아.'],['해리','나도 왜 저기에 내 이름이 있는지 모르겠어.']),{kind:'student'}),
+  T('hermione','헤르미온느',20,14,D(['헤르미온느','싸우는 건 나중에 해. 첫 시험이 뭔지부터 알아내야 해.']),{kind:'student',choices:[choice('practice','방어와 회피부터 연습하자.','좋아. 오래 버텨야 생각할 시간도 생기니까.',{speaker:'헤르미온느',flag:'ch04.plan',value:'defense'}),choice('research','도서관에서 단서를 찾아보자.','책은 내가 맡을게. 넌 하그리드를 만나 봐.',{speaker:'헤르미온느',flag:'ch04.plan',value:'research'})]}),
+  T('hagrid','하그리드',24,7,D(['하그리드','오늘 밤 숲 가장자리로 와라. 망토도 챙기고.']),{kind:'hagrid',reward:R(120)})
+ ]),
+ S(5,'첫 시험을 준비하며','classroom',{width:46,depth:32,rest:true,grantSpells:['S036','S059']},[
+  T('lesson','플리트윅 교수',10,25,D(['플리트윅 교수','상대를 쓰러뜨릴 필요는 없어요. 주의를 돌릴 방법을 골라 보세요.']),{choices:[choice('blast','폭발 수업 · confringo / bombarda','주변에 누가 있는지 먼저 살피세요. 폭발은 한 점에서 끝나지 않거든요.',{speaker:'플리트윅 교수',reward:R(0,{},[],['S008','S013'])}),choice('birds','새 소환 · avis / oppugno','새들이 먼저 있어야 공격 명령을 따를 수 있어요.',{speaker:'플리트윅 교수',reward:R(0,{},[],['S043','S044'])}),choice('heal','치유 수업 · sanavita','회복 중에도 움직일 수 있어요. 위험한 자리에 서 있지는 마세요.',{speaker:'플리트윅 교수',reward:R(0,{},[],['S031'])})]}),
+  C('broom','accio로 대여 빗자루를 부르세요',22,19,'S036','broom'),
+  T('gear','대회 교환회 연락원',34,12,D(['연락원','월드컵 장터의 남은 재고도 이쪽으로 옮겼어요. 필요한 물건이 있나요?']),{kind:'shopkeeper',shopId:'SH11',reward:R(130,{I002:2,I004:3})}),
+  T('ron','론',39,6,D(['론','용이야. 진짜 용. 이제 네가 이름을 넣지 않았다는 걸 알겠어.'],['해리','그걸 이제 알았냐? …그래도 와 줘서 고마워.']),{kind:'student'})
+ ]),
+ S(6,'용의 둥지','forest',{flightAfter:'4-06.lure2',width:64,depth:46,spawn:{x:7,z:37},exit:{x:56,z:7},temporarySupplies:{SUP_I002:3,SUP_I004:3},blockers:[{x:22,z:29,w:4,d:4},{x:42,z:29,w:4,d:4},{x:24,z:12,w:4,d:4}],entryDialogue:D(['해리','알만 가져오면 돼. 용과 싸워 이길 필요는 없어.'],['해리','바위 뒤에서 숨을 고르고, 두 유인 장치로 시선을 돌리자.']),entities:[{id:'MB4',type:'boss',kind:'dragon',name:'헝가리 혼테일 · 알 회수',x:36,z:13,hp:1,invulnerable:true,radius:2,speed:.55,conditions:['4-06.ready'],hiddenUntilAvailable:true,hiddenAfter:['4-06.egg'],combat:{sequence:['breath','claw','gust'],phaseSequences:[['breath','claw'],['breath','gust','claw'],['gust','breath','rush']],attackRange:34,aggroRange:44,startDelay:2.5}}],encounter:{bossId:'MB4',endObjectives:['4-06.egg'],phases:[['4-06.lure1'],['4-06.lure2']],progress:['4-06.lure1','4-06.lure2','4-06.egg'],label:'주의 분산'},reward:R(200,{},['P034'])},[
+  T('ready','첫 시험 출발선',9,36,D(['심판','신호가 울렸습니다. 시작하세요!']),{kind:'sign'}),
+  C('lure1','sonorus로 서쪽 유인 장치를 울리세요',13,23,'S060','harp'),
+  C('lure2','sonorus로 동쪽 유인 장치를 울리세요',51,27,'S060','harp'),
+  F('air1',51,17),F('air2',45,7),
+  T('egg','황금알',34,7,D(['해리','잡았어! 이제 출구 쪽으로!']),{kind:'golden-egg',consumeOnInteract:true,reward:R(0,{I062:1})})
+ ]),
+ S(7,'무도회 전날','village',{width:48,depth:32,rest:true,blockers:[{x:25,z:13,w:7,d:7}]},[
+  T('invite','헤르미온느',10,25,D(['헤르미온느','무도회 준비 좀 도와줄래? 시험 얘기가 안 나오는 날도 필요하잖아.']),{kind:'student',choices:[choice('friend','친구들 준비를 도울게.','론의 예복 상자가 계단에 있어. 놀리지는 말고.',{speaker:'헤르미온느',flag:'ch04.ballHelp',value:'friends'}),choice('music','음악 장치를 맡을게.','악기가 멈춰도 누가 춤을 잘못 춘 건 아니라고 해 줘.',{speaker:'헤르미온느',flag:'ch04.ballHelp',value:'music'})]}),
+  C('repair','reparo로 음악 상자를 고치세요',19,24,'S038','harp'),
+  C('sound','sonorus로 음을 확인하세요',34,19,'S060','harp'),
+  C('quiet','quietus로 울림을 마무리하세요',38,11,'S061','harp'),
+  T('supplies','마을 연락원',41,6,D(['연락원','음악이 돌아왔네요. 이건 준비를 도와준 학생들 몫이에요.']),{shopId:'SH11',reward:R(100,{I010:2})})
+ ]),
+ S(8,'성탄 무도회','castle',{width:42,depth:32,rest:true},[
+  T('cedric','세드릭',11,24,D(['세드릭','첫 시험 때 알려줘서 고마웠어. 황금알은 물속에서 들어 봐.'],['해리','물속? 알겠어. 고마워.']),{kind:'cedric'}),
+  T('fleur','플뢰르',27,21,D(['플뢰르','여기는 겨울에도 호수가 얼지 않나요?'],['해리','겉으로는 조용한데, 안에는 별게 다 있어요.']),{kind:'fleur'}),
+  T('krum','크룸',30,10,D(['크룸','도서관에서 네 친구를 자주 봤다. 내가 말을 걸면 책을 놓지 않더군.'],['해리','헤르미온느라면 그럴 거예요.']),{kind:'krum'}),
+  T('friends','론',18,7,D(['론','이런 밤에도 대회 얘기를 하네.'],['해리','그럼 잠깐 바람이나 쐬자.']),{kind:'student',reward:R(100,{I002:1,I004:1})})
+ ]),
+ S(9,'황금알의 수수께끼','castle',{width:34,depth:26,rest:true,grantSpells:['S014']},[
+  C('bath','aguamenti로 욕조에 물을 채우세요',12,18,'S014','valve'),
+  T('egg','물속의 황금알',21,16,D(['알 속의 노래','소중한 것을 호수 아래에서 찾으라. 물 위의 숨은 오래 따라오지 못하리라.'],['해리','물속에서 한참을 버텨야 해.']),{kind:'golden-egg',storyItemChanges:{I062:'used'}}),
+  T('breath','도비',27,9,D(['도비','아가미풀을 드릴까요? 아니면 교수님이 빌려주신 호흡구도 있습니다.']),{kind:'dobby',choices:[choice('gilly','아가미풀 · 빠른 수영 / 산소 60','물방울이 솟는 곳에서 숨을 보충하세요!',{speaker:'도비',flag:'ch04.breathing',value:'gilly',reward:R(0,{I038:1})}),choice('bubble','호흡구 · 보통 수영 / 산소 90','공기 방울 가까이 가면 다시 가득 찹니다.',{speaker:'도비',flag:'ch04.breathing',value:'bubble',reward:R(0,{I039:1})})],reward:R(80,{I002:2,I004:2})})
+ ]),
+ S(10,'호수 아래로','underwater',{grantSpells:['S009'],width:70,depth:42,spawn:{x:6,z:35},exit:{x:63,z:6},rest:true,oxygen:true,blockers:[{x:23,z:16,w:7,d:8},{x:45,z:27,w:7,d:8}],entities:[{id:'4-10.air1',type:'prop',kind:'bubble',name:'공기 방울',x:17,z:30,radius:1,oxygenZone:3},{id:'4-10.air2',type:'prop',kind:'bubble',name:'공기 방울',x:36,z:18,radius:1,oxygenZone:3},{id:'4-10.air3',type:'prop',kind:'bubble',name:'공기 방울',x:57,z:11,radius:1,oxygenZone:3}],temporarySupplies:{SUP_I004:3,SUP_I002:2},entryDialogue:D(['해리','바닥에서 공기 방울이 올라와. 저곳들을 이어 가면 되겠어.'])},[
+  C('weed','diffindo로 물풀을 자르세요',13,33,'S009','brush'),
+  W('swarm1','호수의 그린딜로','grindylow',[[20,29],[25,31],[29,26],[33,30],[30,22]],{hp:78,damage:19}),
+  T('ron','잠든 론',40,12,D(['해리','밧줄을 풀었어. 이제 같이 올라가자.']),{kind:'student',pose:'down',hiddenAfter:['4-10.return']}),
+  W('swarm2','몰려드는 그린딜로','grindylow',[[48,13],[51,16],[55,19],[59,15],[55,7],[63,11],[47,7],[38,7]],{hp:76,damage:20}),
+  T('girl','가브리엘',59,7,D(['해리','혼자 남겨 둘 수는 없어. 론도, 이 아이도 데리고 나가야 해.']),{kind:'student',pose:'down',hiddenAfter:['4-10.return']}),
+  T('return','수면으로 이어진 물길',63,6,D(['플뢰르','내 동생을 데려왔군요… 고마워요.'],['해리','아직 아래에 있길래요. 두고 올 수 없었어요.']),{kind:'bubble',reward:R(180,{},['P035'])})
+ ]),
+ S(11,'돌아온 뒤의 의문','castle',{width:46,depth:34,rest:true},[
+  T('report','크룸',10,27,D(['크룸','숲에서 이상한 사람을 봤다. 말이 앞뒤가 맞지 않았어.']),{kind:'krum'}),
+  C('traces','revelio로 흩어진 서류를 조사하세요',22,20,'S040','letter'),
+  T('cedric','세드릭',35,13,D(['세드릭','크라우치 씨를 찾으러 갔는데 아무도 없었어. 누가 먼저 데려간 걸까?']),{kind:'cedric'}),
+  T('office','교장실의 호출',39,7,D(['맥고나걸 교수','포터, 교장 선생님이 찾으십니다. 지금 들어가 보세요.']),{kind:'letter',reward:R(100)})
+ ]),
+ S(12,'남겨진 기억','castle',{width:36,depth:32,rest:true},[
+  T('pensieve','펜시브',11,25,D(['해리','물에 비친 얼굴이 아니야. 이 안에서 사람들이 움직여.']),{kind:'crystal'}),
+  C('memory','revelio로 법정의 기억을 살피세요',21,19,'S040','crystal'),
+  T('trial','법정의 증언',26,12,D(['기억 속 목소리','바티 크라우치 주니어. 피고에게 주어진 혐의를 확인한다.'],['해리','사진에서 봤던 사람이야. 지금 무슨 일이 벌어지는 거지?']),{kind:'book'}),
+  T('headmaster','덤블도어',17,7,D(['덤블도어','기억은 답을 줄 때도, 질문을 늘릴 때도 있지. 네가 본 것은 내가 살펴보마.']),{reward:R(120,{},['P004'])})
+ ]),
+ S(13,'미궁을 준비하는 법','classroom',{width:46,depth:34,rest:true,grantSpells:['S010','S009','S007']},[
+  T('brief','맥고나걸 교수',10,27,D(['맥고나걸 교수','길이 닫히면 장애물의 성질을 살피세요. 무엇이든 불태우면 되는 것은 아닙니다.'])),
+  C('wall','reducto로 연습 바리케이드를 부수세요',23,20,'S010','machine'),
+  T('shop','대회 교환회 연락원',35,15,D(['연락원','마지막 준비 물자예요. 작은 물약도 있고 큰 물약도 있습니다.']),{shopId:'SH11',reward:R(180,{I002:3,I004:3},['P036'])}),
+  T('friend','세드릭',39,7,D(['세드릭','안에서 만나도 무사히 돌아오는 게 먼저야.'],['해리','그래. 한 명만 돌아오는 경기는 아니니까.']),{kind:'cedric'})
+ ]),
+ S(14,'트라이위저드 미궁','maze',{width:72,depth:48,spawn:{x:5,z:40},exit:{x:65,z:7},layout:{kind:'maze',floorRegions:[{x:17,z:38,w:30,d:16},{x:34,z:35,w:10,d:8},{x:46,z:27,w:18,d:24},{x:47,z:13,w:8,d:8},{x:56,z:7,w:26,d:10}]},temporarySupplies:{SUP_I002:2,SUP_I004:3},entryDialogue:D(['해리','발자국은 남는데 길이 자꾸 달라져. 막힌 곳을 열면서 앞으로 가자.'])},[
+  W('spiders1','미궁의 독거미','venom-spider',[[13,37],[17,41],[21,35],[25,40],[28,33],[12,32]],{hp:84,damage:20}),
+  C('brush','incendio로 가로막은 수풀을 태우세요',34,35,'S007','brush',{blocking:{w:2,d:8}}),
+  W('guards','미궁의 가시 수호자','grindylow',[[42,33],[47,30],[51,34],[43,23],[49,21],[51,17]],{hp:92,damage:21}),
+  C('wall','reducto로 돌벽을 부수세요',47,13,'S010','machine',{blocking:{w:8,d:2}}),
+  T('riddle','스핑크스의 질문',50,7,D(['스핑크스','다가올수록 작아지고, 지나가면 다시 커지는 것은?'],['해리','거리를 말하는 거지. 목적지까지 남은 거리.']),{kind:'book'}),
+  W('last','컵을 지키는 큰 거미','venom-spider',[[57,8],[60,5],[64,9],[65,4]],{hp:110,damage:22}),
+  T('cup','트라이위저드 컵',66,7,D(['세드릭','같이 잡자. 서로 도왔으니까.'],['해리','셋을 세면. 하나, 둘…']),{kind:'cup',consumeOnInteract:true,reward:R(180,{I063:1})})
+ ]),
+ S(15,'묘지의 결투','graveyard',{width:64,depth:46,spawn:{x:8,z:37},exit:{x:57,z:6},rest:true,temporarySupplies:{SUP_I002:3,SUP_I004:3},blockers:[{x:18,z:29,w:4,d:3},{x:44,z:29,w:4,d:3},{x:19,z:15,w:4,d:3},{x:43,z:14,w:4,d:3}],entryDialogue:D(['해리','세드릭? …세드릭, 일어나.'],['볼드모트','돌아갈 곳이 있다고 생각하느냐.'],['해리','컵까지 가야 해. 세드릭도 데려갈 거야.']),entities:[{id:'B4',type:'boss',kind:'voldemort',name:'볼드모트 · 귀환할 틈을 만드세요',x:32,z:7,hp:1,invulnerable:true,radius:.8,speed:.7,conditions:['4-15.start'],hiddenUntilAvailable:true,hiddenAfter:['4-15.return'],combat:{sequence:['curse','deathline','burst'],phaseSequences:[['curse','burst','deathline'],['curse','pressure','curse'],['deathline','curse','burst']],attackRange:50,aggroRange:60,preferredRange:15,startDelay:2.5,projectileSpeed:11}}],encounter:{bossId:'B4',endObjectives:['4-15.return'],phases:[['4-15.cover2'],['4-15.link']],progress:['4-15.cover1','4-15.cover2','4-15.link','4-15.return'],label:'귀환 준비'},reward:R(0)},[
+  T('start','손에 돌아온 지팡이',9,36,D(['해리','똑바로 서자. 저주를 맞받기보다 비석 뒤로 움직여야 해.']),{kind:'book'}),
+  H('cover1','서쪽 비석 뒤에서 2초 숨을 고르세요',18,33,2,{holdRadius:2}),
+  H('cover2','동쪽 비석 뒤로 이동해 2초 버티세요',44,33,2,{holdRadius:2}),
+  C('link','중앙 연결점에서 expelliarmus를 3회 시전하세요',32,24,'S011','crystal',{count:3,repeatable:true}),
+  T('cedric','세드릭',49,20,D(['해리','집으로 같이 가자.']),{kind:'cedric',hiddenAfter:['4-15.return']}),
+  T('return','귀환 컵',57,6,D(['해리','아씨오!']),{kind:'cup',consumeOnInteract:true,storyItemChanges:{I063:'used'}})
+ ]),
+ S(16,'거짓 교수','castle',{width:42,depth:32,rest:true,nextId:'5-01',chapterEnd:true,entryDialogue:D(['무디 교수','네가 어떻게 살아 돌아왔는지 말해 봐라.'],['해리','교수님… 제가 묘지에 갔다는 건 어떻게 아셨어요?'])},[
+  C('door','alohomora로 잠긴 상자를 여세요',13,23,'S037','trunk'),
+  T('truth','덤블도어',25,18,D(['덤블도어','그는 무디 교수가 아니다. 진짜 무디는 이 상자 안에 갇혀 있었지.'],['해리','처음부터 저를 컵으로 보내려고 했던 거군요.'])),
+  T('hospital','병동의 친구들',31,11,D(['헤르미온느','말하고 싶지 않으면 지금은 안 해도 돼.'],['론','여기 있을게. 둘 다.']),{kind:'student'}),
+  T('farewell','세드릭의 아버지',23,6,D(['해리','세드릭이… 함께 컵을 잡자고 했어요. 저를 도와줬어요.'],['세드릭의 아버지','데려와 줘서 고맙다.']),{reward:R(300,{I002:3,I004:3})})
+ ])
+]};
+CHAPTER.scenes.find(s=>s.id==='4-15').entities.push(...[[11,12],[29,17],[50,11],[51,32]].map(([x,z],i)=>({id:`4-15.circle.${i+1}`,type:'enemy',kind:'death-eater',name:'길을 막는 죽음을 먹는 자',x,z,hp:86,damage:20,speed:1.5,radius:.7,conditions:['4-15.link'],hiddenUntilAvailable:true,hiddenAfter:['4-15.return'],combat:{sequence:['duel','disarm'],startDelay:2+i*.5,attackRange:17,aggroRange:34,preferredRange:9}})));
+export default CHAPTER;

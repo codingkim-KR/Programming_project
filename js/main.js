@@ -2,9 +2,10 @@ import { PixelWorldRenderer as WorldRenderer } from './pixel-renderer.js';
 import { GameEngine } from './core/engine.js';
 import { newGame, validateSave } from './core/state.js';
 import { SaveManager } from './core/save.js';
-import { CHAPTER } from './chapters/ch01.js';
-import { SPELLS, ITEMS, SHOPS } from './catalog.js';
+import { loadScene, resumeSceneId, chapterInfo, chapterIdForScene } from './chapters/index.js';
+import { SPELLS, ITEMS, SHOPS, offerAvailable } from './catalog.js';
 import { iconUrl, portraitFor, dialoguePortrait, DraftSoundBank } from './asset-ui.js';
+import { pendantView, BOOK_TABS, adjacentBookTab } from './inventory-ui.js';
 
 const $ = id => document.getElementById(id);
 const escapeHtml = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -12,6 +13,7 @@ const spellById = new Map(SPELLS.map(s => [s.id,s]));
 const modal = $('modal');
 let renderer, engine, saved, demoEngine, started = false, switching = false, pausedByBlur = false;
 let dialogueState = null, bookOpen = false, transitionBusy = false;
+let activeBookTab='spells', selectedPendantSlot=0, spellResetGeneration=0;
 let keys = new Set(), lastFrame = 0, accumulator = 0, lastHud = 0, lastPanels = '', saveTimer = null;
 let soundOn = true, draftSoundsOn = false, audioContext;
 const draftSoundBank = new DraftSoundBank();
@@ -51,7 +53,7 @@ function catalogIcon(id,fallback='◇') {
   return url?`<img class="catalog-icon" src="${escapeHtml(url)}" alt="" width="36" height="36" loading="lazy" draggable="false">`:escapeHtml(fallback);
 }
 function updateDialoguePortrait(line,context={}) {
-  const portrait=dialoguePortrait(line,{sceneId:engine?.scene.id,chapterComplete:engine?.save.progress.completedChapterIds.includes('ch01'),...context});
+  const portrait=dialoguePortrait(line,{sceneId:engine?.scene.id,chapterComplete:engine?.save.progress.completedChapterIds.includes(chapterIdForScene(engine?.scene.id)),...context});
   const element=$('dialogue-portrait');
   element.hidden=!portrait;$('dialogue-box').classList.toggle('has-portrait',!!portrait);
   if(portrait){element.src=portrait.url;element.alt='';element.dataset.character=portrait.character;element.dataset.expression=portrait.expression;}
@@ -74,7 +76,7 @@ function releaseKeys() { keys.clear(); engine?.setMovement(0,0); engine?.setGuar
 function isPaused() { return !started || modal.open || !!dialogueState || bookOpen || switching || transitionBusy || pausedByBlur || document.hidden; }
 function focusGameUI() {
   if(dialogueState) (dialogueState.choosing?$('dialogue-choices').querySelector('.is-selected'):$('dialogue-continue'))?.focus({preventScroll:true});
-  else if(bookOpen) $('book-close').focus({preventScroll:true});
+  else if(bookOpen) $('tab-'+activeBookTab).focus({preventScroll:true});
   else if(started) $('world').focus({preventScroll:true});
 }
 function closeModal() { if(started&&engine?.world.player.hp<=0){onEngineEvent({type:'defeat'});return;} modal.close(); releaseKeys(); focusGameUI(); }
@@ -143,18 +145,26 @@ function onEngineEvent(event) {
   if(event.type==='changed')scheduleSave();
   if(event.type==='objective'){sound('success');lastPanels='';scheduleSave();}
   if(event.type==='sound')sound(event.kind);
-  if(event.type==='bossPhase'){toast(`보스 ${event.phase}단계 · 체크포인트가 갱신되었습니다`);scheduleSave();}
+  if(event.type==='bossPhase'){toast(`보스 ${event.phase}단계`);scheduleSave();}
+  if(event.type==='dialogue'&&!engine.defeated){
+    resetSpellInput();
+    showDialogue(event.lines,()=>{engine.completeDialogue(event.id);scheduleSave();refreshHud();});
+  }
   if(event.type==='defeat') {
-    releaseKeys();sound('defeat');
-    openModal('잠시 숨을 고르세요','<p>이 여정은 여기서 끝나지 않습니다.<br>마지막 체크포인트에서 다시 도전할 수 있습니다.</p>',[{label:'체크포인트에서 다시 시작',action:async()=>{engine.restartCheckpoint();closeModal();lastPanels='';await persistNow();}},{label:'주문과 조작 확인',className:'secondary-button',action:showHelp}],'TRY AGAIN');
+    releaseKeys();resetSpellInput();setBook(false);sound('defeat');
+    const bossBattle=engine.scene.entities.some(e=>e.type==='boss'&& !engine.save.progress.flags[`defeated:${e.id}`]);
+    openModal('잠시 숨을 고르세요',bossBattle?'<p>보스 전투 시작 지점에서 다시 도전합니다.<br>보스의 체력과 공격 단계도 처음으로 돌아갑니다.</p>':'<p>마지막 체크포인트에서 다시 도전할 수 있습니다.</p>',[{label:bossBattle?'보스 전투부터 다시 시작':'체크포인트에서 다시 시작',action:async()=>{resetSpellInput();engine.restartCheckpoint();closeModal();lastPanels='';refreshPanels();refreshHud();await persistNow();}},{label:'주문과 조작 확인',className:'secondary-button',action:showHelp}],'TRY AGAIN');
     $('modal-close').hidden=true;
   }
 }
-function getScene(id) { return CHAPTER.scenes.find(s=>s.id===id) || CHAPTER.scenes[0]; }
+const getScene = loadScene;
+function chapterFinished() { return !!engine && !engine.scene.nextId && engine.save.progress.completedChapterIds.includes(chapterIdForScene(engine.scene.id)); }
 function updateSceneUI() {
-  const s=engine.scene; $('scene-name').textContent=s.name;$('scene-kicker').textContent=s.kicker || 'THE FIRST YEAR';
+  const s=engine.scene,chapter=chapterInfo(chapterIdForScene(s.id));
+  document.title=`LUMOS — ${chapter.title}`;$('campaign-label').textContent=`CHAPTER ${chapter.number}`;$('campaign-subtitle').textContent=chapter.title;
+  $('scene-name').textContent=s.name;$('scene-kicker').textContent=s.kicker || (chapter.number===2?'THE SECOND YEAR':'THE FIRST YEAR');
   $('location-badge').textContent=`${s.id} · ${s.name}`;$('mode-badge').textContent= s.theme==='flight'?'비행 훈련': s.entities.some(x=>x.type==='boss')?'보스 구간':'탐험';
-  $('spell-input').value='';lastPanels='';$('exit-button').hidden=true;$('interact-prompt').hidden=true;
+  resetSpellInput();lastPanels='';$('exit-button').hidden=true;$('interact-prompt').hidden=true;
   $('viewport-hint').textContent=s.theme==='flight'?'화살표로 반짝이는 고리를 통과하세요':'화살표로 이동 · 가까이에서 Enter로 대화 / 작동';
   refreshPanels();refreshHud();updateSpellInput();
 }
@@ -182,8 +192,10 @@ async function startGame(isNew=false) {
 }
 async function launch(state) {
   try { validateSave(state); }catch(e){toast(`저장을 열지 못했습니다: ${e.message}`);return;}
-  switching=true;engine?.dispose();demoEngine?.dispose();demoEngine=null;
-  const scene=getScene(state.cursor.subchapterId);
+  switching=true;
+  let scene;
+  try{scene=await getScene(resumeSceneId(state));}catch(error){switching=false;toast(`장소를 불러오지 못했습니다: ${error.message}`);return;}
+  engine?.dispose();demoEngine?.dispose();demoEngine=null;
   engine=new GameEngine({movementProjection:'topdown',save:structuredClone(state),scene,onEvent:onEngineEvent});started=true;
   document.body.classList.remove('on-title');$('title-screen').hidden=true;
   switching=false;await enterScene(scene);focusGameUI();
@@ -197,29 +209,49 @@ function refreshPanels() {
   $('spell-list').innerHTML=learned.length?learned.map(sp=>`<button class="spell-card" data-spell="${sp.id}"><span class="spell-glyph" style="--spell-color:${escapeHtml(sp.color || '#9acbd1')}">${catalogIcon(sp.id,'✦')}</span><span class="spell-meta"><span class="spell-name">${escapeHtml(sp.name)}</span><span class="spell-word">${escapeHtml(sp.input)}</span></span><span class="spell-cost">${sp.mana}<small>MP</small></span></button>`).join(''):'<div class="empty-book"><span>✧</span><p>아직 펼치지 않은 주문서</p><small>첫 수업에서<br>당신의 마법을 배우게 됩니다.</small></div>';
   $('spell-list').querySelectorAll('[data-spell]').forEach(b=>b.onclick=()=>showSpell(spellById.get(b.dataset.spell)));
   $('gold-value').textContent=s.inventory.gold;
-  const eq=s.inventory.equipment;
-  $('equipment-list').innerHTML=`<div class="equipment-heading">장비</div>`+(eq.length?eq.map(e=>{
-    const item=ITEMS[e.catalogId]||{name:e.catalogId};const equipped=s.loadout.wandInstanceId===e.instanceId||s.loadout.pendantInstanceIds.includes(e.instanceId);
-    return `<button class="equipment-row ${equipped?'equipped':''}" data-equip="${escapeHtml(e.instanceId)}"><span>${catalogIcon(e.catalogId,e.catalogId.startsWith('W')?'╱':'◇')}</span><div>${escapeHtml(item.name)}<small>${equipped?'장착 중':'눌러서 장착'}</small></div></button>`;
+  const eq=s.inventory.equipment.filter(e=>ITEMS[e.catalogId]?.kind==='wand');
+  $('equipment-list').innerHTML=`<div class="equipment-heading">지팡이</div>`+(eq.length?eq.map(e=>{
+    const item=ITEMS[e.catalogId]||{name:e.catalogId};const equipped=s.loadout.wandInstanceId===e.instanceId;
+    return `<button class="equipment-row ${equipped?'equipped':''}" data-equip="${escapeHtml(e.instanceId)}"><span>${catalogIcon(e.catalogId,'╱')}</span><div>${escapeHtml(item.name)}<small>${escapeHtml(item.description||'')}</small><small>${equipped?'장착 중':'눌러서 장착'}</small></div></button>`;
   }).join(''):'<p class="muted">지팡이는 다이애건 골목에서 받습니다.</p>');
   $('equipment-list').querySelectorAll('[data-equip]').forEach(b=>b.onclick=()=>{
-    const e=eq.find(x=>x.instanceId===b.dataset.equip);const slot=e.catalogId.startsWith('W')?'wand':Math.max(0,s.loadout.pendantInstanceIds.findIndex(x=>x===null));
-    const result=engine.equip(e.instanceId,slot);toast(result?.message||'장비를 장착했습니다.');lastPanels='';scheduleSave();refreshPanels();
+    const e=eq.find(x=>x.instanceId===b.dataset.equip);
+    const result=engine.equip(e.instanceId,'wand');toast(result?.message||'장비를 장착했습니다.');lastPanels='';scheduleSave();refreshPanels();
   });
+  renderPendants();
   const stacks=Object.entries(s.inventory.stacks).filter(([,n])=>n>0);
   $('inventory-list').innerHTML=stacks.length?stacks.map(([id,n])=>`<button class="inventory-row" data-item="${id}"><span>${catalogIcon(id,'◈')}</span><div>${escapeHtml(ITEMS[id]?.name||id)}<small>${ITEMS[id]?.kind==='consumable'?'눌러서 사용':'재료 / 임무 물품'}</small></div><b>×${n}</b></button>`).join(''):'<p class="muted">가방이 비어 있습니다.</p>';
   $('inventory-list').querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>useItem(b.dataset.item));
-  const quick=['I001','I003','I002','I004'];$('quick-items-list').innerHTML=quick.map((id,i)=>{
+  const quick=[0,1,2,3].map(i=>engine.quickItem(i));$('quick-items-list').innerHTML=quick.map((id,i)=>{
     const temporary=Object.entries(engine.world.temporarySupplies||{}).filter(([key])=>key.endsWith(`_${id}`)).reduce((sum,[,n])=>sum+n,0),count=(s.inventory.stacks[id]||0)+temporary;
     return `<button data-quick="${id}" title="${escapeHtml(ITEMS[id]?.name||'비어 있는 슬롯')}${temporary?` · 이번 전투 보급 ${temporary}개 포함`:''}" ${!count?'disabled':''}><kbd>${i+1}</kbd><span style="color:${i%2?'#87bfe0':'#d79688'}">${catalogIcon(id,'·')}</span><small>${ITEMS[id]?count:'—'}${temporary?'*':''}</small></button>`;
   }).join('');
   $('quick-items-list').querySelectorAll('[data-quick]').forEach(b=>b.onclick=()=>useItem(b.dataset.quick));
 }
+function renderPendants(focusSlot=false) {
+  const view=pendantView(engine.save,selectedPendantSlot);selectedPendantSlot=view.selected;
+  $('pendant-count').textContent=`${view.equippedCount} / 3`;
+  $('pendant-owned-count').textContent=`${view.owned.length}개`;
+  $('pendant-slots').innerHTML=view.slots.map(({slot,instance,item,selected})=>`<button class="pendant-slot ${selected?'selected':''} ${instance?'':'empty'}" data-pendant-slot="${slot}" aria-pressed="${selected}" aria-label="${slot+1}번 자리: ${escapeHtml(item?.name||'비어 있음')}${selected?' · 교체할 자리':''}"><span class="pendant-slot-top"><span>${slot+1}번 자리</span><b>${selected?'선택':instance?'장착':'빈 자리'}</b></span><span class="pendant-slot-icon">${instance?catalogIcon(instance.catalogId,'◇'):'＋'}</span><strong>${escapeHtml(item?.name||'비어 있는 자리')}</strong><small>${escapeHtml(item?.description||'이 자리를 선택하고 아래의 펜던트를 장착하세요.')}</small></button>`).join('');
+  $('pendant-slots').querySelectorAll('[data-pendant-slot]').forEach(b=>b.onclick=()=>{selectedPendantSlot=Number(b.dataset.pendantSlot);renderPendants(true);});
+  const selected=view.slots[view.selected];
+  $('pendant-selection-label').textContent=`${view.selected+1}번 자리 ${selected.item?`· ${selected.item.name}`:'· 비어 있음'}`;
+  $('pendant-unequip').disabled=!selected.instance;
+  $('pendant-list').innerHTML=view.owned.length?view.owned.map(({instance,item,equippedSlot})=>`<button class="pendant-card ${equippedSlot>=0?'equipped':''}" data-pendant="${escapeHtml(instance.instanceId)}"><span class="pendant-card-icon">${catalogIcon(instance.catalogId,'◇')}</span><span class="pendant-card-copy"><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.description)}</small><span class="pendant-action">${equippedSlot>=0?`${equippedSlot+1}번에 장착 중 · 자리 선택`:`${view.selected+1}번 자리에 ${selected.instance?'교체':'장착'}`}</span></span></button>`).join(''):'<p class="pendant-empty">아직 보유한 펜던트가 없습니다.<br>탐험과 수업에서 펜던트를 얻을 수 있습니다.</p>';
+  $('pendant-list').querySelectorAll('[data-pendant]').forEach(b=>b.onclick=()=>{
+    const choice=view.owned.find(e=>e.instance.instanceId===b.dataset.pendant);if(!choice)return;
+    if(choice.equippedSlot>=0){selectedPendantSlot=choice.equippedSlot;renderPendants(true);return;}
+    const result=engine.equip(choice.instance.instanceId,selectedPendantSlot);
+    toast(result.ok?`${selectedPendantSlot+1}번 자리 · ${choice.item.name} 장착`:result.message);
+    lastPanels='';scheduleSave();refreshPanels();if(result.ok)$('pendants-panel').scrollTop=0;$('pendant-slots').querySelector(`[data-pendant-slot="${selectedPendantSlot}"]`)?.focus({preventScroll:true});
+  });
+  if(focusSlot)$('pendant-slots').querySelector(`[data-pendant-slot="${selectedPendantSlot}"]`)?.focus({preventScroll:true});
+}
 function useItem(id){if(!engine)return;const r=engine.useItem(id);if(r?.message)toast(r.message);lastPanels='';scheduleSave();refreshPanels();}
 function showSpell(sp){openModal(sp.name,`<div class="spell-detail-word">${catalogIcon(sp.id,'✦')}${escapeHtml(sp.input)}</div><p>${escapeHtml(sp.description)}</p><div class="reward-grid"><div class="reward-item">마나<strong>${sp.mana} MP</strong></div><div class="reward-item">재사용<strong>${sp.cooldown}초</strong></div>${sp.damage?`<div class="reward-item">기본 피해<strong>${sp.damage}</strong></div>`:''}</div><p class="tip">공백 없이 영어로 입력한 뒤 Enter를 누르세요.<br>입력 중에도 이동과 방어를 할 수 있습니다.</p>`,[{label:'확인',action:closeModal}],'SPELLBOOK');}
 function nearestEntity() {
   if(!engine)return null;const p=engine.world.player;
-  return engine.world.entities.filter(e=>e.active!==false&&!e.hidden&&!e.consumed&&!['enemy','boss','target','ring'].includes(e.type)&&(e.conditions||[]).every(id=>engine.save.progress.completedObjectiveIds.includes(id)))
+  return engine.world.entities.filter(e=>engine.canInteract(e)&&!e.hidden)
     .map(e=>({e,d:Math.hypot(e.x-p.x,e.z-p.z)})).filter(o=>o.d<3.4&&engine.lineClear(p,o.e)).sort((a,b)=>a.d-b.d)[0]?.e||null;
 }
 function nearExit() {const exit=engine?.scene.exit,p=engine?.world.player;return !!(exit&&p&&engine.canExit()&&Math.hypot(p.x-exit.x,p.z-exit.z)<3.3&&engine.lineClear(p,exit));}
@@ -233,18 +265,40 @@ function refreshHud() {
   $('hp-value').textContent=`${Math.ceil(p.hp)} / ${Math.ceil(p.maxHp)}`;$('hp-bar').style.width=`${Math.max(0,p.hp/p.maxHp*100)}%`;
   $('mana-value').textContent=`${Math.floor(p.mana)} / ${p.maxMana}`;$('mana-bar').style.width=`${p.mana/p.maxMana*100}%`;
   const objectives=engine.objectives(),done=objectives.filter(o=>o.done).length,current=objectives.find(o=>!o.done);
-  const chapterDone=engine.save.progress.completedChapterIds.includes('ch01')&&!engine.scene.nextId;
-  $('current-objective').textContent=current?.label||(chapterDone?'제1장 완료':'출구로 이동하세요');$('objective-count').textContent='';
+  const chapterDone=chapterFinished();
+  const objectiveLabel=current?.displayGroup?`${current.label} (${objectives.filter(o=>o.displayGroup===current.displayGroup&&o.done).length}/${current.displayTotal})`:current?.group?`${current.groupLabel||current.label} (${objectives.filter(o=>o.group===current.group&&o.done).length}/${current.groupTotal||objectives.filter(o=>o.group===current.group).length})`:current?.label;
+  $('current-objective').textContent=objectiveLabel||(chapterDone?`제${chapterInfo(chapterIdForScene(engine.scene.id)).number}장 완료`:'출구로 이동하세요');$('objective-count').textContent='';
   $('exit-button').hidden=!nearExit()||isPaused()||chapterDone;$('exit-button').innerHTML='장소 이동 <kbd>Enter</kbd>';
-  const near=nearestEntity();$('interact-prompt').hidden=(!near&&!nearExit())||isPaused()||chapterDone;if(nearExit())$('interact-text').textContent='밖으로 나가기';else if(near)$('interact-text').textContent=near.interactLabel||`${near.name} · ${near.shopId?'상점':'살펴보기'}`;
+  const near=nearestEntity();$('interact-prompt').hidden=(!near&&!nearExit())||isPaused()||(chapterDone&&!near);if(nearExit()&&!chapterDone)$('interact-text').textContent='밖으로 나가기';else if(near)$('interact-text').textContent=near.interactLabel||`${near.name} · ${near.shopId?'상점':'살펴보기'}`;
+  const status=[];
+  if(engine.world.hold)status.push(`${engine.world.hold.inside?'수호 중':'표식 가까이 이동'} · ${engine.world.hold.remaining}초`);
+  if(p.oxygen!==undefined)status.push(`산소 ${Math.ceil(p.oxygen)} / ${p.maxOxygen} · 공기 방울에서 보충`);
+  if(p.fearUntil>engine.world.time)status.push('공포 · 이동 속도 감소');
+  if(p.patronusUntil>engine.world.time)status.push(`수호령 ${Math.ceil(p.patronusUntil-engine.world.time)}초`);
+  if(engine.world.zone)status.push(`결계 ${Math.ceil(engine.world.zone.remaining)} · ${Math.ceil(engine.world.zone.until-engine.world.time)}초`);
+  if(p.reflectReady&&p.reflectUntil>engine.world.time)status.push('반사 대기 · 1회');
+  if(p.stealthUntil>engine.world.time)status.push(`소리 은폐 ${Math.ceil(p.stealthUntil-engine.world.time)}초`);
+  if(p.echoReady)status.push('메아리 준비');
+  if(p.parryCharged)status.push('방어 반격 +35%');
+  if(p.birds>0&&p.birdsUntil>engine.world.time)status.push(`소환 새 ${p.birds}마리`);
+  if(engine.save.player.learnedSpells.some(id=>['S030','S031'].includes(id)))status.push(`치유 ${engine.save.player.healingChargesRemaining}회`);
+  if(p.revealResistance&&engine.world.revealUntil>engine.world.time){const foe=engine.world.entities.find(e=>e.id===engine.world.targetId);if(foe)status.push(foe.invulnerable?'표적: 직접 피해 무효':foe.kind==='dementor'?'표적: 패트로누스로 격퇴':foe.kind==='basilisk'?'표적: 비늘 피해 감소':'표적: 특별 저항 없음');}
+
+  if(p.poisonUntil>engine.world.time)status.push(`중독 ${Math.ceil(p.poisonUntil-engine.world.time)}초 · purga / 3`);
+  if(p.petrifiedUntil>engine.world.time)status.push(`석화 ${Math.ceil(p.petrifiedUntil-engine.world.time)}초`);
+  if(p.disarmedUntil>engine.world.time)status.push(`무장해제 ${Math.ceil(p.disarmedUntil-engine.world.time)}초 · 이동해서 거리 벌리기`);
+  $('status-effects').textContent=status.join('  ·  ');$('status-effects').hidden=!status.length;
+  const warning=engine.world.telegraphs.find(a=>['gaze','pool','breath','deathline','teleport'].includes(a.kind)||a.kind==='charge'&&engine.world.entities.some(e=>e.id===a.ownerId&&e.kind==='basilisk'));
+  const cues={teleport:'순간이동 예고 · umbraancora로 저지 가능',breath:'용의 화염 · 바위 뒤로 피하세요',deathline:'☠ 치명적인 저주 · 비석 엄폐 / 옆으로 이동',charge:'송곳니 돌진 · 옆으로 피하세요',pool:'독액 · 바닥의 예고 범위를 벗어나세요',gaze:'시선 공격 · 기둥 뒤로 피하세요',venomPool:'독액 · 바닥의 예고 범위를 벗어나세요',poisonPool:'독액 · 바닥의 예고 범위를 벗어나세요',fangCharge:'송곳니 돌진 · 옆으로 피하세요','fang-charge':'송곳니 돌진 · 옆으로 피하세요'};
+  $('combat-cue').hidden=!warning;$('combat-cue').textContent=warning?(warning.kind==='teleport'&&engine.world.entities.find(e=>e.id===warning.ownerId)?.kind==='snape'?'스네이프의 이동 · 예고 지점에서 벗어나세요':warning.kind==='pool'&&warning.element==='fire'?'검은 불길 · 바닥의 예고 범위를 벗어나세요':cues[warning.kind]):'';
   $('guard-indicator').hidden=!p.guarding;$('guard-value').textContent=`안정도 ${Math.floor(p.guardStability||0)}`;
-  const boss=engine.world.entities.find(e=>['boss','troll'].includes(e.type)||e.kind==='troll');const activeBoss=boss&&boss.active!==false&&boss.hp>0;$('boss-hud').hidden=!activeBoss;
-  if(activeBoss){$('boss-name').textContent=boss.name;$('boss-phase').textContent=boss.kind==='troll'?(boss.hp/boss.maxHp<=.5?'격앙':''):`PHASE ${boss.phase||1}`;$('boss-bar').style.width=`${Math.max(0,boss.hp/boss.maxHp*100)}%`;}
+  const boss=engine.world.entities.find(e=>(e.type==='boss'||e.kind==='troll')&&e.active!==false&&!e.hidden&&!e.locked);const activeBoss=boss&&boss.active!==false&&!boss.hidden&&!boss.locked&&boss.hp>0;$('boss-hud').hidden=!activeBoss;
+  if(activeBoss){$('boss-name').textContent=boss.name;$('boss-phase').textContent=boss.invulnerable?(boss.objectiveTotal?`${boss.progressLabel} ${boss.objectiveProgress||0} / ${boss.objectiveTotal}`:'목표를 수행하세요'):boss.kind==='troll'?(boss.hp/boss.maxHp<=.5?'격앙':''):`PHASE ${boss.phase||1}`;$('boss-bar').style.width=`${boss.invulnerable?100*(boss.objectiveProgress||0)/(boss.objectiveTotal||1):Math.max(0,boss.hp/boss.maxHp*100)}%`;}
   const target=engine.world.entities.find(e=>e.id===engine.world.targetId&&e.active!==false);
   const labels=[];
   for(const e of [near,target].filter((e,i,a)=>e&&a.indexOf(e)===i)) {
     const pos=overlayPoint(e.x,e.z,e.type==='boss'?3.8:2.3);
-    if(pos.visible)labels.push(`<span class="nameplate ${e===target?'target':''}" style="left:${pos.x*100}%;top:${pos.y*100}%">${e===target?'◇ ':''}${escapeHtml(e.name)}${['enemy','boss','target'].includes(e.type)?`<small>${Math.ceil(e.hp)} / ${e.maxHp}</small>`:''}</span>`);
+    if(pos.visible)labels.push(`<span class="nameplate ${e===target?'target':''}" style="left:${pos.x*100}%;top:${pos.y*100}%">${e===target?'◇ ':''}${escapeHtml(e.name)}${['enemy','boss','target'].includes(e.type)?`<small>${e.invulnerable?'직접 피해 무효':`${Math.ceil(e.hp)} / ${e.maxHp}`}</small>`:''}</span>`);
   }
   $('nameplates').innerHTML=labels.join('');
   const goal=current?.target?engine.world.entities.find(e=>e.id===current.target&&e.active!==false&&!e.locked):engine.canExit()&&!chapterDone?{...engine.scene.exit,name:'출구'}:null;
@@ -260,31 +314,42 @@ function updateSpellInput(){
   $('spell-suggestion').textContent=match?'준비되었습니다. Enter로 시전하세요.':suggestions.length?suggestions.slice(0,3).map(s=>s.input).join('  ·  '):value?'일치하는 주문이 없습니다. 주문서를 확인하세요.':'이동하면서 입력할 수 있습니다';
   $('cast-button').classList.toggle('ready',!!match);
 }
+function resetSpellInput(){
+  spellResetGeneration++;$('spell-input').value='';$('spell-console').classList.remove('miscast','ready');$('cast-button').classList.remove('ready');
+  updateSpellInput();
+}
 function castOrInteract() {
   if(isPaused()||!engine)return;
   const input=$('spell-input').value.trim();
   if(!input){interact();return;}
   const result=engine.cast(input);
   $('spell-input').value='';
-  if(result.ok){renderer?.setCastFeedback?.();scheduleSave();}else {sound('failure');if(result.message)toast(result.message);$('spell-console').classList.remove('miscast');requestAnimationFrame(()=>$('spell-console').classList.add('miscast'));setTimeout(()=>$('spell-console').classList.remove('miscast'),400);}
+  if(result.ok){renderer?.setCastFeedback?.();scheduleSave();}else {sound('failure');if(result.message)toast(result.message);$('spell-console').classList.remove('miscast');const generation=spellResetGeneration;requestAnimationFrame(()=>{if(generation===spellResetGeneration)$('spell-console').classList.add('miscast');});setTimeout(()=>$('spell-console').classList.remove('miscast'),400);}
   updateSpellInput();refreshHud();
 }
 function interact() {
   if(isPaused()||!engine)return;
-  if(nearExit()&&!(engine.save.progress.completedChapterIds.includes('ch01')&&!engine.scene.nextId)){finishScene();return;}
+  if(nearExit()&&!chapterFinished()){finishScene();return;}
   const entity=engine.interact();if(!entity){toast('대화하거나 작동할 대상 가까이로 이동하세요.');return;}
   const finish=choice=>{
-    if(choice){engine.save.progress.flags[choice.flag||`choice.${entity.id}`]=choice.value??choice.id;engine.recordEvent('choice',{target:entity.id,choice:choice.id});}
+    if(choice){
+      engine.save.progress.flags[choice.flag||`choice.${entity.id}`]=choice.value??choice.id;
+      if(choice.reward)engine.grantReward(choice.reward,`choice:${entity.id}`);
+      engine.recordEvent('choice',{target:entity.id,choice:choice.id});
+    }
+    for(const id of entity.useStoryItems||[])if(engine.save.progress.storyItems[id]==='owned')engine.save.progress.storyItems[id]='used';
+    for(const id of entity.destroyStoryItems||[])if(engine.save.progress.storyItems[id])engine.save.progress.storyItems[id]='destroyed';
     engine.recordEvent('interact',{target:entity.id});lastPanels='';scheduleSave();refreshPanels();
     if(entity.shopId)showShop(entity.shopId);
   };
   const variant=entity.dialogueVariants?.find(v=>engine.save.progress.flags[v.flag]===v.equals);
-  const dialogue=variant?.lines|| (entity.dialogue?.length?entity.dialogue:[{speaker:entity.name,text:entity.interactLabel||'주변을 살펴봅니다.'}]);
-  showDialogue(dialogue,finish,entity.choices||[]);
+  const lessonDone=entity.choices?.some(c=>c.reward)&&engine.save.world.claimedRewardIds.includes(`choice:${entity.id}`);
+  const dialogue=(lessonDone?entity.repeatDialogue:null)||variant?.lines|| (entity.dialogue?.length?entity.dialogue:[{speaker:entity.name,text:entity.interactLabel||'주변을 살펴봅니다.'}]);
+  showDialogue(dialogue,finish,lessonDone?[]:(entity.choices||[]));
 }
 function showShop(shopId) {
   const shop=SHOPS[shopId];if(!shop){toast('이 상점은 아직 문을 열지 않았습니다.');return;}
-  const rows=shop.offers.map(offer=>{
+  const rows=shop.offers.filter(offer=>offerAvailable(offer,engine.save)).map(offer=>{
     const item=offer.spellId?spellById.get(offer.spellId):ITEMS[offer.itemId];
     const owned=offer.spellId&&engine.save.player.learnedSpells.includes(offer.spellId);
     const record=engine.save.world.shopOffers[offer.id];const left=record?.remaining??offer.stock;
@@ -302,27 +367,31 @@ async function finishScene() {
   const result=engine.finishScene();if(!result.ok){transitionBusy=false;toast(result.message||'목표를 먼저 완료하세요.');return;}
   try{await persistNow();}catch{transitionBusy=false;return;}
   sound('success');lastPanels='';refreshPanels();
-  if(result.chapterComplete || !engine.scene.nextId) {
-    showDialogue([{speaker:'덤블도어',text:'돌은 이제 안전하단다. 오늘은 충분히 애썼으니, 친구들에게 돌아가 보렴.'},{speaker:'론',text:'해리! 드디어 나왔구나. 기차에서 할 얘기가 산더미겠는데?'},{speaker:'헤르미온느',text:'이번엔 아무도 쫓아오지 않는 객실로 가자. 셋이 함께 앉을 자리부터 찾을까?'}],()=>toast('제1장 완료 · 진행이 저장되었습니다.'));
-    transitionBusy=false;
-  }else {
+  const nextId=result.nextId||engine.scene.nextId;
+  if(nextId) {
     transitionBusy=true;releaseKeys();$('scene-transition').classList.add('active');
-    try{await new Promise(resolve=>setTimeout(resolve,180));await enterScene(getScene(result.nextId||engine.scene.nextId));}
+    try{await new Promise(resolve=>setTimeout(resolve,180));await enterScene(await getScene(nextId));}
+    catch(error){toast(`다음 장소를 불러오지 못했습니다: ${error.message} · 출구에서 다시 시도하세요.`);}
     finally{$('scene-transition').classList.remove('active');transitionBusy=false;focusGameUI();}
+  }else {
+    transitionBusy=false;
+    const message=`제${chapterInfo(chapterIdForScene(engine.scene.id)).number}장 완료 · 진행이 저장되었습니다.`;
+    if(engine.scene.exitDialogue?.length)showDialogue(engine.scene.exitDialogue,()=>toast(message));else toast(message);
   }
 }
+
 function showObjectives() {
   if(!engine)return;
   openModal(engine.scene.name,`<p>${escapeHtml(engine.scene.description)}</p><div>${engine.objectives().map(o=>`<div class="quest-row ${o.done?'done':''}"><span>${o.done?'✓':'◇'}</span><div><strong>${escapeHtml(o.label)}</strong>${o.hint?`<p>${escapeHtml(o.hint)}</p>`:''}<small>${o.current||0} / ${o.count||1}</small></div></div>`).join('')}</div>`,[{label:'여정 계속하기',action:closeModal}],'CURRENT OBJECTIVES');
 }
 function showHelp() {
-  openModal('마법사 안내서',`<p>화면 속 표식에 가까이 가서 대화하고, 목표를 달성하면 다음 이야기로 이동할 수 있습니다.</p><div class="controls-grid"><div class="key-row"><kbd>↑ ↓ ← →</kbd><span>화면 기준 이동</span></div><div class="key-row"><kbd>A–Z</kbd><span>영어 주문 입력 · 공백 없음</span></div><div class="key-row"><kbd>Enter</kbd><span>주문 시전 / 입력이 없으면 대화</span></div><div class="key-row"><kbd>Space</kbd><span>대화 넘기기 / 전투 중 누르기: 방어</span></div><div class="key-row"><kbd>Tab</kbd><span>표적 순환</span></div><div class="key-row"><kbd>1–4</kbd><span>빠른 소모품 사용</span></div><div class="key-row"><kbd>Backspace / Esc</kbd><span>한 글자 수정 / 입력 비우기</span></div><div class="key-row"><kbd>&#96;</kbd><span>주문서·가방 열기 / 닫기</span></div><div class="key-row"><kbd>F2 / F10</kbd><span>현재 목표 / 전체 화면</span></div></div><p class="tip">대화는 Enter 또는 Space로 넘기고, 대답은 방향키로 고른 뒤 Enter로 확정합니다. 주문이 틀려도 Enter를 누르면 입력이 비워져 바로 다시 칠 수 있습니다. 적색 공격 예고는 이동해서 피하세요.</p><p class="muted">메뉴·대화·가방이 열려 있을 때는 게임이 멈춥니다. 메뉴는 방향키와 Enter로 조작하고 Esc로 닫습니다. 출구에 다가가 Enter를 누르면 다음 장소로 이동합니다. 기기 저장은 자동입니다. 다른 기기에서 이어하려면 저장 파일을 가져오거나 설정에서 클라우드를 연결하세요.</p>`,[{label:'알겠습니다',action:()=>{closeModal();if(engine?.world.player.hp<=0)onEngineEvent({type:'defeat'});}}],'HOW TO PLAY');
+  openModal('마법사 안내서',`<p>화면 속 표식에 가까이 가서 대화하고, 목표를 달성하면 다음 이야기로 이동할 수 있습니다.</p><div class="controls-grid"><div class="key-row"><kbd>↑ ↓ ← →</kbd><span>화면 기준 이동</span></div><div class="key-row"><kbd>A–Z</kbd><span>영어 주문 입력 · 공백 없음</span></div><div class="key-row"><kbd>Enter</kbd><span>주문 시전 / 입력이 없으면 대화</span></div><div class="key-row"><kbd>Space</kbd><span>대화 넘기기 / 전투 중 누르기: 방어</span></div><div class="key-row"><kbd>Tab</kbd><span>표적 순환</span></div><div class="key-row"><kbd>1–4</kbd><span>1 체력 · 2 마나 · 3 해독 · 4 활력</span></div><div class="key-row"><kbd>Backspace / Esc</kbd><span>한 글자 수정 / 입력 비우기</span></div><div class="key-row"><kbd>&#96;</kbd><span>주문서·가방 열기 / 닫기</span></div><div class="key-row"><kbd>PageUp / PageDown</kbd><span>주문서·소지품·펜던트 탭 이동</span></div><div class="key-row"><kbd>F2 / F10</kbd><span>현재 목표 / 전체 화면</span></div></div><p class="tip">대화는 Enter 또는 Space로 넘기고, 대답은 방향키로 고른 뒤 Enter로 확정합니다. 주문이 틀려도 Enter를 누르면 입력이 비워져 바로 다시 칠 수 있습니다. 적색 공격 예고는 이동해서 피하세요.</p><p class="muted">메뉴·대화·가방이 열려 있을 때는 게임이 멈춥니다. 메뉴는 방향키와 Enter로 조작하고 Esc로 닫습니다. 펜던트 탭에서 3개의 장착 자리와 효과를 확인하고, 바꿀 자리를 먼저 선택할 수 있습니다. 출구에 다가가 Enter를 누르면 다음 장소로 이동합니다. 기기 저장은 자동입니다. 다른 기기에서 이어하려면 저장 파일을 가져오거나 설정에서 클라우드를 연결하세요.</p>`,[{label:'알겠습니다',action:()=>{closeModal();if(engine?.world.player.hp<=0)onEngineEvent({type:'defeat'});}}],'HOW TO PLAY');
 }
 function downloadSave() {
   if(engine&&started){engine.syncSave();saved=structuredClone(engine.save);}
   if(!saved){toast('저장된 여정이 아직 없습니다.');return;}
   const blob=new Blob([JSON.stringify(saved,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download=`lumos-ch01-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  a.href=url;a.download=`lumos-${saved.cursor.chapterId}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function showSettings() {
   const cloud=saveManager.getCloudConfig();
@@ -366,7 +435,8 @@ window.addEventListener('keydown',e=>{
   }
   if(bookOpen){
     if(e.key==='Escape'||e.code==='Backquote'){e.preventDefault();if(!e.repeat)setBook(false);return;}
-    if(['PageUp','PageDown'].includes(e.key)){e.preventDefault();setTab(e.key==='PageUp');$('tab-'+(e.key==='PageUp'?'spells':'inventory')).focus();return;}
+    if(['PageUp','PageDown'].includes(e.key)){e.preventDefault();setTab(adjacentBookTab(activeBookTab,e.key==='PageUp'?-1:1));$('tab-'+activeBookTab).focus();return;}
+    if(document.activeElement?.getAttribute('role')==='tab'&&['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();setTab(adjacentBookTab(activeBookTab,e.key==='ArrowLeft'?-1:1));$('tab-'+activeBookTab).focus();return;}
     panelKeys(e,document.querySelector('.spellbook'));return;
   }
   if(e.code==='Backquote'){e.preventDefault();if(!e.repeat)setBook(true);return;}
@@ -377,7 +447,8 @@ window.addEventListener('keydown',e=>{
   if(e.key==='Enter'){e.preventDefault();if(!e.repeat)castOrInteract();return;}
   if(e.key==='Escape'){e.preventDefault();if($('spell-input').value){$('spell-input').value='';updateSpellInput();}else showPause();return;}
   if(e.key==='Backspace'){e.preventDefault();$('spell-input').value=$('spell-input').value.slice(0,-1);updateSpellInput();return;}
-  if(/^[1-4]$/.test(e.key)){e.preventDefault();if(!e.repeat)useItem(['I001','I003','I002','I004'][Number(e.key)-1]);return;}
+  if(/^F[3-5]$/.test(e.key)){e.preventDefault();if(!e.repeat){const result=engine.usePendant(Number(e.key.slice(1))-3);toast(result.message);scheduleSave();}return;}
+  if(/^[1-4]$/.test(e.key)){e.preventDefault();if(!e.repeat)useItem(engine.quickItem(Number(e.key)-1));return;}
   if(/^[a-zA-Z]$/.test(e.key)){e.preventDefault();if($('spell-input').value.length<48){$('spell-input').value+=e.key.toLowerCase();if(draftSoundsOn)sound('input');}updateSpellInput();return;}
   if(e.key==='F1'){e.preventDefault();showHelp();}
 });
@@ -397,8 +468,17 @@ $('cast-button').onclick=castOrInteract;$('interact-button').onclick=interact;$(
 $('exit-button').onclick=finishScene;$('quest-button').onclick=showObjectives;$('help-button').onclick=showHelp;$('title-help').onclick=showHelp;
 $('settings-button').onclick=showSettings;$('pause-button').onclick=showPause;$('brand-home').onclick=e=>{e.preventDefault();showPause();};
 $('modal-close').onclick=closeModal;modal.addEventListener('cancel',e=>{if(engine?.world.player.hp<=0){e.preventDefault();return;}releaseKeys();});
-$('tab-spells').onclick=()=>setTab(true);$('tab-inventory').onclick=()=>setTab(false);
-function setTab(spells){$('spells-panel').hidden=!spells;$('inventory-panel').hidden=spells;$('tab-spells').classList.toggle('active',spells);$('tab-inventory').classList.toggle('active',!spells);$('tab-spells').setAttribute('aria-selected',String(spells));$('tab-inventory').setAttribute('aria-selected',String(!spells));}
+for(const tab of BOOK_TABS)$('tab-'+tab).onclick=()=>setTab(tab);
+function setTab(tab){
+  activeBookTab=BOOK_TABS.includes(tab)?tab:'spells';
+  for(const id of BOOK_TABS){const active=id===activeBookTab;$(id+'-panel').hidden=!active;$('tab-'+id).classList.toggle('active',active);$('tab-'+id).setAttribute('aria-selected',String(active));}
+  document.body.classList.toggle('book-pendants',activeBookTab==='pendants');
+}
+$('pendant-unequip').onclick=()=>{
+  const result=engine.unequip(selectedPendantSlot);toast(result.message);lastPanels='';scheduleSave();refreshPanels();
+  if(result.ok)$('pendants-panel').scrollTop=0;
+  $('pendant-slots').querySelector(`[data-pendant-slot="${selectedPendantSlot}"]`)?.focus({preventScroll:true});
+};
 $('audio-button').onclick=()=>{soundOn=!soundOn;if(!soundOn)draftSoundBank.stopAll();try{localStorage.setItem('lumos.sound',soundOn?'on':'off');}catch{}refreshAudio();if(soundOn)sound('click');};
 function refreshAudio(){$('audio-button').textContent=soundOn?'♪ 소리 켜짐':'♪ 소리 꺼짐';$('audio-button').setAttribute('aria-pressed',String(soundOn));}
 $('import-file').onchange=async e=>{
@@ -433,7 +513,7 @@ async function init(){
     if(!saved)$('save-status').innerHTML='<i></i>시작하면 기기에 저장';
     if(saved){$('continue-button').hidden=false;$('new-game-button').className='secondary-button';}
     renderer=new WorldRenderer($('world'));
-    const demoScene=structuredClone(getScene('1-05'));
+    const demoScene=structuredClone(await getScene('1-05'));
     demoEngine=new GameEngine({movementProjection:'topdown',save:newGame(),scene:demoScene,onEvent:()=>{}});
     demoEngine.world.player.x=13;demoEngine.world.player.z=18;
     setBook(false);

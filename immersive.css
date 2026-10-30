@@ -252,3 +252,52 @@ body:not(.on-title) .spell-console{box-shadow:4px 4px 0 #10202b;max-width:560px}
 .nameplate{border-radius:0!important;box-shadow:2px 2px 0 #15212b;background:#172939e8}
 .title-art{background:linear-gradient(90deg,#10212eec 0%,#10212ecb 30%,#10212e1c 65%,#10212e00 100%)}
 .title-content h1{text-shadow:4px 4px 0 #172532;font-family:Georgia,serif}
+
+/* Current conditions only; no upcoming encounter or chapter list. */
+.status-effects{position:static;color:#d2efab;border-top:1px solid #9cad6755;margin-top:6px;padding-top:6px;font-size:11px;line-height:1.6;pointer-events:none;overflow-wrap:anywhere}
+.combat-cue{position:absolute;top:96px;left:50%;transform:translateX(-50%);z-index:6;background:#1d222ef0;color:#ffdfa0;border:1px solid #d6ad6a;padding:8px 14px;font-size:13px;text-align:center;pointer-events:none;max-width:65vw}
+.status-effects[hidden],.combat-cue[hidden]{display:none}
+body.in-dialogue .status-effects,body.in-dialogue .combat-cue{display:none}
+@media(max-width:650px){.status-effects{font-size:10px}.combat-cue{top:154px;font-size:11px}}
+
+/* Pendants have three explicit positions; selection never silently replaces slot 1. */
+body.book-pendants:not(.on-title) .spellbook{width:min(560px,calc(100vw - 40px))}
+body:not(.on-title) .book-tabs{gap:22px;margin-right:52px}
+#pendants-panel{min-height:0;flex:1;overflow:auto;padding-right:5px}
+body.book-pendants .quick-items{display:none}
+.pendant-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pendant-slot{display:flex;flex-direction:column;align-items:center;text-align:center;padding:10px 9px 12px;background:#102330;border:1px solid #52616a;color:#e0dfcd;min-width:0}
+.pendant-slot.selected{border:2px solid #dbb873;padding:9px 8px 11px;background:#293a3e;box-shadow:inset 0 0 0 2px #14252e}
+.pendant-slot-top{display:flex;justify-content:space-between;gap:5px;width:100%;font-size:10px;color:#aebdc2}
+.pendant-slot-top b{color:#dcb773;font-weight:400;font-size:9px}
+.pendant-slot-icon{height:46px;display:grid;place-items:center;font-size:27px;color:#dcb773;margin:6px 0}
+.pendant-slot strong{font-size:12px;line-height:1.55;font-weight:600;word-break:keep-all;overflow-wrap:anywhere}
+.pendant-slot small{margin-top:6px;font-size:10px;line-height:1.65;color:#b7c4c9;word-break:keep-all;overflow-wrap:anywhere}
+.pendant-slot.empty{border-style:dashed;color:#99b0bc}
+.pendant-slot.empty .pendant-slot-icon{color:#8aa3ae}
+.pendant-selection{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:13px}
+.pendant-selection p{font-size:12px;line-height:1.6;margin:0;color:#ead5a9}
+.pendant-selection button{flex-shrink:0;font-size:11px;padding:7px 9px;border:1px solid #af946457}
+.pendant-selection button:disabled{opacity:.35;cursor:default}
+.pendant-instruction{font-size:11px;line-height:1.7;color:#9eb0ba;margin:5px 0 19px}
+.pendant-owned-heading{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#d0d9da;border-top:1px solid #71808b44;padding-top:14px;margin-bottom:9px}
+.pendant-owned-heading small{font-size:10px;color:#a7b7bc}
+.pendant-list{display:flex;flex-direction:column;gap:7px}
+.pendant-card{width:100%;display:flex;gap:12px;text-align:left;padding:11px 12px;border:1px solid #60738166;background:#0c1c28;color:#e0e6df}
+.pendant-card.equipped{border-color:#8eaa8866;background:#1d3031}
+.pendant-card-icon{display:grid;place-items:center;flex-shrink:0;width:37px;color:#dcb773;font-size:24px}
+.pendant-card-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pendant-card strong{font-size:12px;font-weight:600;line-height:1.6}
+.pendant-card small{font-size:11px;color:#aebfc6;line-height:1.65;word-break:keep-all}
+.pendant-action{font-size:10px;color:#dbc088;line-height:1.6}
+.pendant-card.equipped .pendant-action{color:#a0cfaa}
+.pendant-empty{color:#9badb9;font-size:12px;line-height:1.9;text-align:center;padding:20px 10px}
+.pendant-key-hint{color:#8fa2b1;font-size:10px;line-height:1.8;margin:15px 0 6px}
+.pendant-slot:focus-visible,.pendant-card:focus-visible,.pendant-selection button:focus-visible{outline:2px solid #f4dd9c;outline-offset:2px}
+@media(max-width:700px){
+  body.book-pendants:not(.on-title) .spellbook{width:calc(100vw - 20px)}
+  .pendant-slots{gap:6px}.pendant-slot{padding:8px 6px}.pendant-slot.selected{padding:7px 5px}
+  .pendant-slot strong{font-size:11px}.pendant-slot small{font-size:10px}.pendant-slot-top{font-size:9px}
+  .pendant-slot-top b{display:none}.pendant-slot-icon{height:37px;margin:5px 0}
+  .pendant-instruction{margin-bottom:12px}.pendant-key-hint{display:none}
+}

@@ -38,7 +38,7 @@ export function portraitFor(speaker,expression='neutral') {
 
 export function dialoguePortrait(line,{sceneId='',choiceResponse=false,chapterComplete=false}={}) {
   // Explicit line direction takes priority. A missing portrait never borrows another person's face.
-  const danger=!chapterComplete&&['1-08','1-10','1-12'].includes(sceneId);
+  const danger=!chapterComplete&&['1-08','1-10','1-12','2-03','2-06','2-08','2-09','2-10','2-11','2-12'].includes(sceneId);
   const expression=line.expression || (danger?'tense':choiceResponse||chapterComplete?'happy':'neutral');
   return portraitFor(line.characterId || line.speaker,expression);
 }

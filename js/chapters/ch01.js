@@ -119,7 +119,7 @@ export const CHAPTER = {
       nextId:'1-12',width:52,depth:32,layout:{kind:'trials',cameraSpan:24,floorRegions:[{x:10,z:25,w:16,d:10},{x:20,z:24,w:8,d:6},{x:28,z:20,w:12,d:14},{x:36,z:17,w:8,d:6},{x:44,z:11,w:12,d:18}]},spawn:{x:5,z:26},exit:{x:48,z:4},
       entryDialogue:[line('헤르미온느','무작정 힘으로 밀어붙이지 마. 장치마다 반응하는 주문이 다를 거야.'),line('론','덩굴을 지나 열쇠를 잡고, 체스말을 옮기자. 마지막 물약은 병에 붙은 기록을 읽어야 해.')],
       entities:[
-        prop('1-11.vines','길을 막은 덩굴',11,25,'vines',{spell:'S007',interactLabel:'incendio로 덩굴 걷기'}),
+        prop('1-11.vines','길을 막은 덩굴',20,24,'vines',{spell:'S007',blocking:{w:2,d:6},interactLabel:'incendio로 덩굴 걷기'}),
         prop('1-11.key','날아다니는 은빛 열쇠',28,22,'key',{spell:'S036',conditions:['1-11.vines']}),
         prop('1-11.chess','마지막 흰색 체스말',43,17,'chess',{spell:'S039',conditions:['1-11.key'],interactLabel:'체스말을 안전한 칸으로 부양'}),
         prop('1-11.potions','세 병의 물약',45,7,'potions',{conditions:['1-11.chess'],dialogue:[line('병의 기록','금빛 병에는 독이 들었다. 돌아가는 물약은 푸른 병에 담겼다. 남은 한 병이 앞길의 불꽃을 잠재운다.'),line('헤르미온느','그림보다 기록을 믿자. 앞으로 가는 병이 어느 것인지 알겠지? 틀려도 다시 생각할 수 있어.')],choices:[{id:'red',label:'붉은 병을 고른다',flag:'1-11.potion',value:'red',response:[line('헤르미온느','맞아. 조금만 마셔. 나머지는 내가 돌아갈 때 쓸게.')]},{id:'gold',label:'금빛 병을 고른다',flag:'1-11.potion',value:'gold',response:[line('헤르미온느','잠깐! 그건 독이라고 적혀 있어. 병을 내려놓고 기록을 다시 보자.')]},{id:'blue',label:'푸른 병을 고른다',flag:'1-11.potion',value:'blue',response:[line('헤르미온느','그건 돌아가는 길이야. 우리는 앞의 불꽃을 지나야 하잖아. 다시 골라 보자.')]}]}),
@@ -128,7 +128,7 @@ export const CHAPTER = {
       objectives:[objective('1-11.vines','incendio로 덩굴을 걷어 내세요','cast','1-11.vines','S007'),objective('1-11.key','accio로 은빛 열쇠를 잡으세요','cast','1-11.key','S036'),objective('1-11.chess','wingardiumleviosa로 체스말을 옮기세요','cast','1-11.chess','S039'),{...objective('1-11.potions','기록을 읽고 앞으로 가는 물약을 고르세요','choice','1-11.potions',null,'금빛은 독, 푸른색은 돌아가는 길입니다. 남은 병을 생각하세요.'),choice:'red'},objective('1-11.reward','체스방의 보상을 확인하세요','interact','1-11.crystal')],reward:reward(60)
     }),
     scene('1-12','거울 앞의 대결','mirror','돌을 탐내는 자와 돌을 지키려는 자. 거울 앞에서 첫해의 마지막 시험이 시작됩니다.',{
-      nextId:null,width:40,depth:40,layout:{kind:'arena',boundary:'ellipse',cameraSpan:27},spawn:{x:12,z:31},exit:{x:20,z:4},grantSpells:essential,temporarySupplies:{SUP_B1_I001:2,SUP_B1_I003:2},
+      nextId:'2-01',chapterEnd:true,width:40,depth:40,layout:{kind:'arena',boundary:'ellipse',cameraSpan:27},spawn:{x:12,z:31},exit:{x:20,z:4},grantSpells:essential,temporarySupplies:{SUP_B1_I001:2,SUP_B1_I003:2},
       entryDialogue:[line('퀴렐','여기까지 올 줄은 몰랐군. 하지만 거울이 내게 보여 주지 않는 것이 있어.'),line('퀴렐','그 결계에 손대지 마라. 거울은 내가 지킨다!'),line('해리','양쪽 장치가 마력을 보내고 있어. incendio로 끊어 보자.')],
       entities:[
         {id:'B1',type:'boss',kind:'quirrell',name:'퀴렐',x:22,z:17,radius:1,hp:320,damage:14,speed:1,pattern:'quirrell',phaseCount:3},

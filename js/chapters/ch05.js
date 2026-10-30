@@ -1,0 +1,120 @@
+import {L,R,choice,talk as T,cast as C,wave as W,hold as H,defeat as K,makeScene} from './chapter-tools.js';
+const S=(n,name,theme,options,steps)=>makeScene(5,n,name,theme,options,steps);
+const D=(...lines)=>lines.map(([speaker,text])=>L(speaker,text));
+const eight=[[17,26],[22,28],[27,24],[32,28],[18,18],[24,16],[30,18],[35,14]];
+const lesson=(id,label,spells,text)=>choice(id,label,text,{speaker:'헤르미온느',reward:R(0,{},[],spells)});
+export const CHAPTER={id:'ch05',title:'불사조 기사단',subtitle:'서로에게 가르쳐 준 것들',version:'0.7.0',scenes:[
+ S(1,'한여름의 디멘터','street',{width:54,depth:24,spawn:{x:5,z:18},exit:{x:49,z:5},grantSpells:['S028'],temporarySupplies:{SUP_I004:2},blockers:[{x:20,z:5,w:12,d:5},{x:33,z:21,w:14,d:4}],entryDialogue:D(['더들리','갑자기 왜 이렇게 추워?'],['해리','벽 쪽으로 붙어. 무슨 소리가 들려도 뛰지 마.']),entities:[{id:'5-01.dementor',type:'enemy',kind:'dementor',name:'골목의 디멘터',x:27,z:13,hp:1,invulnerable:true,speed:2.5,hiddenAfter:['5-01.shelter'],combat:{sequence:['chill','dread'],startDelay:3,attackRange:13,aggroRange:40,preferredRange:2}}]},[
+  C('light','expectopatronum으로 더들리 앞을 지키세요',14,15,'S028','patronus-ward'),
+  H('shelter','수호 표식 가까이에서 8초 버티세요',14,15,8,{holdRadius:4}),
+  T('dudley','더들리',28,12,D(['더들리','내가… 저런 소리를 냈어?'],['해리','지금은 걸을 수 있겠어? 집까지 가야 해.']),{kind:'student',hiddenAfter:['5-01.figg']}),
+  T('figg','피그 부인',43,8,D(['피그 부인','지팡이 집어넣지 마! 내가 앞장설 테니 둘 다 따라와.'],['해리','저것들이 여기까지 올 줄 아셨어요?']),{reward:R(100)})
+ ]),
+ S(2,'그리몰드의 오래된 집','headquarters',{width:36,depth:42,spawn:{x:7,z:36},exit:{x:28,z:5},rest:true,grantSpells:['S064'],blockers:[{x:18,z:30,w:8,d:3},{x:7,z:18,w:5,d:4}],entryDialogue:D(['시리우스','집이 조금 불친절하지. 너한테 그러는 건 아니야.'],['해리','저 커튼도 절 노려보는 것 같아요.'])},[
+  T('supply','시리우스',12,35,D(['시리우스','장식장 물건은 맨손으로 만지지 마라. 봉인용 밀랍부터 챙겨.']),{kind:'sirius',reward:R(0,{I035:1}),hiddenAfter:['5-02.seal']}),
+  C('reveal','homenumrevelio로 복도의 기척을 찾으세요',25,27,'S064','letter'),
+  T('kreacher','크리처',28,19,D(['크리처','주인님의 물건을 또 버린다, 버려…'],['해리','이 집에서 계속 살았어?']),{kind:'kreacher',choices:[choice('gentle','물건을 함부로 버리지는 않을게.','대답은 없지만, 크리처가 장식장 앞에서 한 걸음 물러섰다.',{flag:'ch05.kreacher',value:'gentle'}),choice('direct','위험한 물건만 정리하려는 거야.','크리처는 작은 은잔을 품에 숨기고 복도 끝으로 사라졌다.',{flag:'ch05.kreacher',value:'direct'})],hiddenAfter:['5-02.seal']}),
+  T('seal','봉인할 장식장',15,15,D(['헤르미온느','뚜껑을 닫아 줘. 틈에 밀랍을 바를게.'],['해리','안에서 아직도 두드리는 소리가 나.']),{kind:'vanishing-cabinet',storyItemChanges:{I035:'used'}}),
+  T('sirius','계단 위의 시리우스',26,7,D(['시리우스','다들 네 편이야. 다만, 어른들이라고 답을 전부 아는 건 아니란다.']),{kind:'sirius'})
+ ]),
+ S(3,'기사단의 식탁','headquarters',{width:40,depth:28,rest:true,blockers:[{x:20,z:14,w:12,d:4}]},[
+  T('table','몰리 위즐리',10,21,D(['몰리','얘기하기 전에 먹어라. 수프가 식겠다.'],['해리','제가 없는 동안 무슨 일이 있었는지 알고 싶어요.'])),
+  T('order','시리우스',29,20,D(['시리우스','놈은 아직 모습을 드러내고 싶지 않을 거야. 그동안 우린 사람들을 모으고 있어.']),{kind:'sirius',choices:[choice('help','제가 할 수 있는 일은 없어요?','우선 살아서 학교로 돌아가라. 그다음에는 혼자 감당하지 말고.',{speaker:'시리우스'}),choice('trust','이제는 제게도 얘기해 주세요.','그래. 네가 겪은 일을 네 앞에서 모르는 척하진 않으마.',{speaker:'시리우스'})]}),
+  T('supplies','통스',31,9,D(['통스','이 표식은 보급 담당자한테 보여 주면 돼. 아, 발밑 우산꽂이 조심해. 난 매번 걸려.']),{kind:'tonks',reward:R(200,{I002:2,I004:3},['P037']),shopId:'SH09'}),
+  T('hearing','청문회 소환장',15,6,D(['아서','시간과 법정이 바뀌었구나. 아침 일찍 출발하자.']),{kind:'letter'})
+ ]),
+ S(4,'마법부의 청문회','ministry',{width:48,depth:34,rest:true,blockers:[{x:24,z:8,w:18,d:4},{x:8,z:19,w:4,d:7},{x:40,z:19,w:4,d:7}]},[
+  T('evidence','아서 위즐리',12,27,D(['아서','어제 일을 차례대로 생각해 보렴. 있었던 일 그대로 말하면 된다.'])),
+  T('testimony','청문회의 질문',24,23,D(['법정의 목소리','미성년자가 마법을 사용한 사실을 인정합니까?']),{kind:'book',choices:[choice('protect','인정합니다. 하지만 더들리를 지켜야 했어요.','다른 방법이 있었다면 쓰지 않았을 겁니다.',{flag:'ch05.hearing',value:'protect'}),choice('dementor','그 골목에 디멘터가 있었습니다.','그걸 막는 주문은 배운 것 중 하나뿐이었어요.',{flag:'ch05.hearing',value:'evidence'})]}),
+  T('witness','피그 부인의 증언',33,14,D(['피그 부인','저도 느꼈습니다. 모든 행복이 사라지는 것 같았어요.'],['해리','…와 주셔서 고마워요.'])),
+  T('dismiss','법정 밖의 아서',33,6,D(['아서','무죄다. 학교에 돌아갈 수 있어.'],['해리','교장 선생님은 벌써 가셨어요?']))
+ ]),
+ S(5,'새로운 교수','classroom',{width:34,depth:30,rest:true},[
+  T('rules','엄브리지 교수',12,23,D(['엄브리지','지팡이는 넣으세요. 교과서를 읽는 데에는 필요 없답니다.'],['해리','실제로 공격받으면 책을 펼칠 시간은 없잖아요.']),{kind:'umbridge'}),
+  T('lines','벌칙용 양피지',24,17,D(['해리','같은 문장을 쓸수록 손등이 따가워진다. 종이를 뒤집어도 피할 수는 없어.']),{kind:'book'}),
+  T('friend','헤르미온느',23,8,D(['헤르미온느','우리가 직접 연습하면 돼. 누군가는 제대로 가르쳐야 하잖아.']),{kind:'student',choices:[choice('hesitate','내가 어떻게 선생님을 해?','네가 겪은 걸 가르쳐 줘. 처음부터 완벽할 필요는 없어.',{speaker:'헤르미온느'}),choice('agree','방어부터라면 도와줄 수 있어.','그럼 사람들을 만나 보자. 조용한 장소가 필요하겠네.',{speaker:'헤르미온느'})]})
+ ]),
+ S(6,'호그스헤드의 모임','village',{width:48,depth:26,rest:true,blockers:[{x:16,z:8,w:8,d:6},{x:34,z:19,w:7,d:5}]},[
+  T('neville','네빌',12,20,D(['네빌','잘 못하는 사람도 와도 돼?'],['해리','우리도 배우러 오는 거야. 잘하는 사람만 모으려는 게 아니야.']),{kind:'neville'}),
+  T('luna','루나',28,12,D(['루나','넌 그 사람이 돌아온 걸 봤어. 그 얘기를 믿는 사람도 있다는 걸 알았으면 해.']),{kind:'luna'}),
+  T('list','모임의 명단',39,8,D(['헤르미온느','이름을 쓰면, 서로를 지키겠다고 약속하는 거야.']),{kind:'book',choices:[choice('defense','다음 모임은 방어와 무장해제부터.','네빌이 지팡이 쥔 손을 고쳐 잡았다.',{flag:'ch05.lessonStyle',value:'defense'}),choice('confidence','겁먹었을 때 움직이는 법부터.','루나가 천천히 고개를 끄덕였다.',{flag:'ch05.lessonStyle',value:'courage'})]}),
+  T('exit','론',42,5,D(['론','이만한 인원이 들어갈 빈 교실을 어디서 찾지?'],['해리','성에는 아직 우리가 모르는 방이 많잖아.']),{kind:'student'})
+ ]),
+ S(7,'필요의 방','classroom',{width:50,depth:38,rest:true,grantSpells:['S038','S039','S037']},[
+  T('door','일곱 층의 벽',10,30,D(['해리','연습할 곳. 들키지 않고 모두가 함께 있을 곳…'],['헤르미온느','해리, 손잡이가 생겼어.']),{kind:'gate',consumeOnInteract:true}),
+  C('mat','reparo로 훈련용 매트를 펴세요',20,28,'S038','machine'),
+  C('target','wingardiumleviosa로 표적을 세우세요',30,20,'S039','target'),
+  C('cabinet','alohomora로 장비장을 여세요',39,13,'S037','trunk'),
+  T('coin','헤르미온느',27,7,D(['헤르미온느','다음 모임 날짜는 이 동전에 나타나게 했어. 모두 같은 걸 하나씩 갖자.'],['해리','이제 정말 시작이네.']),{kind:'student',reward:R(180,{},['P038'])})
+ ]),
+ S(8,'비밀 수업 I','classroom',{width:46,depth:36,rest:true,grantSpells:['S011','S012'],temporarySupplies:{SUP_I004:3}},[
+  T('curriculum','오늘의 두 수업',10,28,D(['헤르미온느','두 분야씩 묶어서 연습하자. 나머지는 다음 모임 전에 교재로 배울 수 있어.']),{kind:'book',choices:[lesson('attack-control','공격 + 제어 · diffindo / silencio',['S009','S022'],'먼저 공격을 끊고, 빈틈을 향해 정확히 쏴 봐.'),lesson('attack-stealth','공격 + 은밀 행동 · diffindo / colloportus',['S009','S041'],'상대를 밀어낸 다음 문을 닫는 순서야.'),lesson('control-stealth','제어 + 은밀 행동 · silencio / colloportus',['S022','S041'],'상대가 주문을 시작하기 전에 흐름을 끊어 보자.')]}),
+  C('disarm','expelliarmus로 지팡이 표적을 맞히세요',22,24,'S011','target'),
+  C('stun','stupefy로 이동 표적을 맞히세요',32,17,'S012','target'),
+  W('practice','훈련 마법 인형','duelist',[[17,13],[22,10],[28,10],[34,11],[37,15],[28,20]],{hp:72,damage:16,combat:{sequence:['duel','disarm'],startDelay:2,projectileSpeed:10}}),
+  T('finish','네빌',38,6,D(['네빌','봤어? 이번에는 지팡이가 내 손에서 안 날아갔어!'],['해리','봤어. 다음에는 한 걸음 옆으로 피하는 것도 같이 해 보자.']),{kind:'neville',reward:R(160)})
+ ]),
+ S(9,'호그스미드의 연락원','village',{width:62,depth:30,rest:true,grantSpells:['S041'],blockers:[{x:20,z:8,w:12,d:8},{x:42,z:23,w:12,d:8}]},[
+  T('parcel','밀봉된 소포',11,24,D(['통스','수신인은 적지 않았어. 빵집 뒤에 있는 사람한테 전해 줘.']),{kind:'trunk',consumeOnInteract:true}),
+  T('checkpoint','길을 살피는 학생',28,19,D(['학생','가방에 든 건 뭐야? 요즘 반입 금지 물건이 많대.']),{kind:'student',choices:[choice('plain','수업에 쓸 물건이야.','학생이 매듭을 한번 보더니 어깨를 으쓱했다.'),choice('redirect','저쪽에서 누가 널 찾던데.','학생이 뒤를 돌아본 사이 옆 골목으로 몸을 옮겼다.')]}),
+  C('side','colloportus로 뒤따라오는 문을 닫으세요',36,14,'S041','gate'),
+  T('contact','빵집 뒤 연락원',52,10,D(['연락원','잘 왔어요. 지팡이 주문도 여기서 받을 수 있습니다. 쌍갈래는 한 번에 두 발이 나가니 효과를 읽어 보세요.']),{kind:'shopkeeper',shopId:'SH09',reward:R(220)})
+ ]),
+ S(10,'악몽과 병원','hospital',{width:44,depth:40,rest:true,blockers:[{x:13,z:16,w:6,d:4},{x:31,z:16,w:6,d:4}],entryDialogue:D(['해리','제가 뱀의 눈으로 봤어요. 아서 아저씨가 바닥에…'],['헤르미온느','지금은 병원에 계셔. 네가 말해 줘서 찾을 수 있었대.'])},[
+  T('arthur','아서 위즐리',13,29,D(['아서','얼굴이 왜 그리 어둡니? 덕분에 여기서 투덜거릴 수 있잖아.'],['해리','아저씨를 공격한 게 저였던 것 같아서요.']),{choices:[choice('confess','그 순간에는 제가 뱀이었어요.','그렇다고 네가 그 일을 원한 건 아니지. 그건 분명히 다르단다.',{speaker:'아서'}),choice('worry','또 그런 꿈을 꾸면 어떡하죠?','그러면 이번에도 혼자 숨기지 말고 알려 주렴.',{speaker:'아서'})]}),
+  T('letter','몰리에게 전할 편지',25,25,D(['아서','아이들 걱정은 그만하고 좀 쉬라고 전해 주렴. 물론 내 말이라고는 하지 말고.']),{kind:'letter',consumeOnInteract:true}),
+  T('healer','병동 치료사',33,10,D(['치료사','이 매듭을 장착하고 다음 휴식 장소에서 쉬면 치유 횟수를 한 번 더 준비할 수 있어요.']),{reward:R(100,{},['P021']),shopId:'SH13'}),
+  T('molly','병원 입구의 몰리',22,5,D(['몰리','쉬라는 편지겠지? 저 사람은 정말… 고맙다, 해리.']))
+ ]),
+ S(11,'마음을 닫는 수업','classroom',{width:30,depth:32,rest:true},[
+  T('snape','스네이프',10,25,D(['스네이프','마음을 비워라. 모든 감정을 숨기라는 말과는 다르다.'],['해리','아무 생각도 안 하려고 할수록 더 생각나요.']),{kind:'snape',hiddenAfter:['5-11.memory']}),
+  T('memory','뒤섞인 기억',21,19,D(['해리','복도, 문, 누군가의 목소리. 이 중에 지금 여기 있는 건 하나도 없어.']),{kind:'crystal',choices:[choice('present','지금 방 안의 소리부터 듣는다.','시계 초침과 바닥을 긁는 의자 소리가 조금씩 또렷해졌다.',{flag:'ch05.mind',value:'present'}),choice('separate','꿈과 내 기억을 나누어 본다.','내가 알 수 없는 복도의 모양을 떠올리자, 기억 사이에 작은 틈이 보였다.',{flag:'ch05.mind',value:'separate'})]}),
+  T('end','수업을 마친 스네이프',20,7,D(['스네이프','오늘은 여기까지다. 꿈을 사실로 단정하지 마라.'],['해리','그럼 어떻게 확인하죠?']),{kind:'snape'})
+ ]),
+ S(12,'비밀 수업 II','classroom',{width:54,depth:38,rest:true,grantSpells:['S027','S033'],temporarySupplies:{SUP_I004:4}},[
+  T('choose','두 번째 수업 계획',10,30,D(['헤르미온느','결계와 반사는 모두 같이 배우고, 응용 수업은 두 분야를 골라 보자.']),{kind:'book',choices:[lesson('chain-frost','연쇄 번개 + 광역 냉기',['S047','S048'],'서로 가까운 적에게 쓸수록 효과가 커져.'),lesson('reflect-summon','반사 + 돌 수호자',['S033','S045'],'반사는 한 발, 수호자는 한 기야. 다시 준비할 시간을 계산해.'),lesson('zone-chain','지역 결계 + 연쇄 번개',['S027','S047'],'결계 안에만 머물 필요는 없어. 공격 예고를 보고 움직여.')]}),
+  C('zone','protegototalum으로 동료의 자리를 보호하세요',24,26,'S027','patronus-ward'),
+  C('mirror','speculumaegis로 반사막을 준비하세요',38,20,'S033','crystal'),
+  W('test','합동 훈련 인형','duelist-elite',eight,{hp:86,damage:19,combat:{sequence:['duel','disarm','burst'],projectileSpeed:10.5,startDelay:2.2}}),
+  T('finish','네빌과 루나',46,7,D(['네빌','서로 보호하니까 훨씬 오래 버틸 수 있었어.'],['루나','해리도 누군가 지켜 줘야 한다는 걸 잊지 마.']),{kind:'neville',reward:R(230,{},['W012']),shopId:'SH02'})
+ ]),
+ S(13,'종이와 불꽃','castle',{width:58,depth:28,spawn:{x:5,z:21},exit:{x:53,z:6},grantSpells:['S041'],blockers:[{x:27,z:6,w:18,d:7}]},[
+  T('twins','프레드와 조지',11,21,D(['프레드','새 학칙을 읽어 봤어? 종이가 아까워.'],['조지','그래서 더 밝게 읽을 수 있게 해 주려고.']),{reward:R(0,{I013:2,I014:3}),shopId:'SH12'}),
+  T('fireworks','천장으로 향한 폭죽 상자',24,19,D(['해리','뚜껑을 여니 작은 불꽃들이 복도 양쪽으로 갈라졌다.'],['조지','이제 출구 쪽으로!']),{kind:'trunk',consumeOnInteract:true}),
+  W('patrol','복도 경비 인형','duelist',[[31,22],[35,18],[40,22],[43,15],[47,20],[50,14]],{hp:83,damage:22,combat:{sequence:['duel','disarm'],projectileSpeed:11}}),
+  C('lock','colloportus로 추격 문을 잠그세요',47,8,'S041','gate'),
+  T('leave','열린 창문',53,6,D(['프레드','가게 주소는 기억하지? 다음에는 손님으로 와!']),{kind:'sign',reward:R(160)})
+ ]),
+ S(14,'숲으로 이어진 거짓말','forest',{width:58,depth:44,spawn:{x:7,z:36},exit:{x:51,z:6},layout:{kind:'forest',floorRegions:[{x:16,z:34,w:24,d:14},{x:29,z:28,w:12,d:14},{x:39,z:17,w:22,d:18},{x:48,z:7,w:14,d:10}]}},[
+  T('umbridge','엄브리지',13,34,D(['엄브리지','덤블도어의 무기라는 게 어디 있죠?'],['헤르미온느','조금 더 안쪽이에요. 사람들 눈에 띄면 안 되거든요.']),{kind:'umbridge',hiddenAfter:['5-14.centaurs']}),
+  C('brush','incendio로 길을 막은 수풀을 태우세요',28,30,'S007','brush',{blocking:{w:2,d:14},hiddenUntilAvailable:false}),
+  T('centaurs','숲의 경고',36,23,D(['해리','주위에서 활시위 당기는 소리가 났다. 엄브리지가 지팡이를 들자 헤르미온느가 내 팔을 당겼다.'],['헤르미온느','뒤로. 지금.']),{kind:'sign'}),
+  T('friends','론과 네빌',43,15,D(['론','우릴 두고 갈 생각이었어?'],['네빌','여기서부터는 같이 가.']),{kind:'neville'}),
+  T('thestral','숲 가장자리의 세스트럴',49,8,D(['루나','보이지 않아도 손을 뻗으면 돼. 얘들은 네가 떨어지게 두지 않을 거야.'],['해리','마법부로 가자. 시리우스를 찾아야 해.']),{kind:'thestral',reward:R(180,{I002:2,I004:3})})
+ ]),
+ S(15,'미스터리 부서','ministry',{width:68,depth:50,spawn:{x:6,z:42},exit:{x:61,z:6},grantSpells:['S024','S029'],temporarySupplies:{SUP_I002:3,SUP_I004:4},blockers:[{x:20,z:31,w:4,d:8},{x:39,z:17,w:10,d:4},{x:54,z:35,w:4,d:8}],entryDialogue:D(['헤르미온느','문들이 돌아갔어. 우리가 들어온 문을 표시해 두자.'],['해리','선반에 내 이름이 있어. 저 유리구슬 아래.'])},[
+  C('mark','revelio로 돌아가는 문의 표식을 찾으세요',13,39,'S040','gate'),
+  T('prophecy','이름이 적힌 예언 구슬',28,34,D(['루시우스','그걸 이리 다오, 포터. 네 친구들은 다치지 않아도 된다.'],['해리','시리우스는 어디 있죠?']),{kind:'prophecy-orb',consumeOnInteract:true}),
+  W('hall','예언의 방 추격자','death-eater',eight.map(([x,z])=>[x+10,z+7]),{hp:104,damage:24,combat:{sequence:['duel','hex','disarm'],projectileSpeed:11.5}}),
+  C('rotate','finiteincantatem으로 회전 장치를 멈추세요',44,26,'S029','machine'),
+  W('ambush','회전실의 결투가','duelist-elite',[[12,20],[17,16],[23,21],[28,16],[32,21],[47,17],[52,21],[57,18],[60,25],[45,11]],{hp:112,damage:25,combat:{sequence:['volley','disarm','burst'],projectileSpeed:12,startDelay:2}}),
+  T('regroup','쓰러진 헤르미온느',29,12,D(['네빌','숨은 쉬어. 내가 부축할게.'],['해리','론과 루나도 데려와. 문 앞에서 다시 만나자.']),{kind:'student',hiddenAfter:['5-15.rearguard.6.clear']}),
+  W('rearguard','퇴로를 막는 가면 마법사','death-eater',[[41,9],[46,6],[51,10],[55,6],[59,11],[62,7]],{hp:110,damage:25,combat:{sequence:['hex','disarm'],projectileSpeed:12}}),
+  T('arch','검은 장막의 방',61,6,D(['해리','저 안에서 누가 부르는 것 같아.'],['루나','나도 들려. 하지만 지금은 돌아보지 마.']),{kind:'veil',reward:R(300,{},['P014','W010'])})
+ ]),
+ S(16,'베일 너머와 그 이후','ministry',{layout:{kind:'atrium'},width:62,depth:46,spawn:{x:7,z:37},exit:{x:55,z:6},rest:true,grantSpells:['S027','S033','S024'],temporarySupplies:{SUP_I002:4,SUP_I004:5},blockers:[{x:18,z:28,w:4,d:4},{x:44,z:28,w:4,d:4},{x:29,z:13,w:6,d:3}],encounter:{bossId:'B5.atrium',endObjectives:['5-16.hold3'],phases:[['5-16.hold1'],['5-16.hold2']],progress:['5-16.hold1','5-16.hold2','5-16.hold3'],label:'동료 보호'},entities:[{id:'B5.atrium',type:'boss',kind:'voldemort',name:'아트리움 · 덤블도어를 지원하세요',x:31,z:7,hp:1,invulnerable:true,radius:.8,speed:.5,conditions:['5-16.ally'],hiddenUntilAvailable:true,hiddenAfter:['5-16.hold3'],combat:{sequence:['volley','darkfire','curse'],phaseSequences:[['volley','burst'],['darkfire','volley'],['darkfire','volley','deathline']],attackRange:48,aggroRange:60,preferredRange:14,projectileSpeed:12,activationDelay:2}}],reward:R(350)},[
+  T('start','시리우스',11,35,D(['시리우스','늦지 않았구나. 내 옆에 붙어라.'],['해리','같이 나가는 거예요.']),{kind:'sirius',hiddenAfter:['5-16.loss']}),
+  K('bellatrix','벨라트릭스',38,17,'bellatrix',{type:'boss',hp:680,radius:.8,speed:2.8,combat:{sequence:['volley','teleport','hex','darkfire'],phaseSequences:[['volley','teleport','hex'],['darkfire','volley','teleport'],['volley','hex','darkfire','teleport']],teleportPoints:[{x:48,z:13},{x:14,z:16},{x:34,z:32}],attackRange:34,aggroRange:50,preferredRange:10,projectileSpeed:13,startDelay:2.2},label:'벨라트릭스의 공격을 피하며 제압하세요'}),
+  T('loss','검은 장막',31,20,D(['해리','시리우스!'],['루핀','해리, 안 돼. 거기로 가면 안 돼.'],['해리','금방 나올 거예요. 저쪽으로 넘어갔을 뿐이잖아요.']),{kind:'veil'}),
+  T('ally','통스',47,22,D(['통스','네 친구들은 밖으로 나갔어. 해리, 내 말을 들어. 지금 네가 여기 남으면 안 돼.'],['덤블도어','해리. 분수의 세 보호점을 이어 주게. 나머지는 내가 맡겠네.']),{kind:'tonks'}),
+  C('ward1','protegototalum으로 서쪽 보호점을 펼치세요',12,24,'S027','patronus-ward'),
+  H('hold1','서쪽 보호점에서 3초 버티세요',12,24,3,{holdRadius:4}),
+  C('ward2','speculumaegis로 중앙 보호점을 이으세요',31,28,'S033','crystal'),
+  H('hold2','중앙 보호점에서 3초 버티세요',31,28,3,{holdRadius:4}),
+  C('ward3','protegototalum으로 마지막 보호점을 펼치세요',49,14,'S027','patronus-ward'),
+  H('hold3','마지막 보호점에서 4초 버티세요',49,14,4,{holdRadius:4}),
+  T('mirror','돌아온 방의 거울 조각',55,6,D(['해리','왜 한 번도 이걸 열어 보지 않았을까.'],['루나','잃어버린 걸 찾느라 여기 있었어. 너도 잠깐 같이 있어도 돼.']),{kind:'locket',reward:R(0,{I045:1}),consumeOnInteract:true})
+ ])
+]};
+CHAPTER.scenes.at(-1).nextId='6-01';CHAPTER.scenes.at(-1).chapterEnd=true;
+export default CHAPTER;
