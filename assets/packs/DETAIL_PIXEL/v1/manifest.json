@@ -1,0 +1,250 @@
+{
+  "pack": "DETAIL_PIXEL",
+  "version": 1,
+  "style": "original native pixel art",
+  "grid": 1,
+  "transparent": true,
+  "source": "scripts/detail-icon-source.mjs",
+  "icons": [
+    {
+      "id": "S070",
+      "name": "emberbolt",
+      "label": "불씨 화살",
+      "motif": "Jagged comet flame with a glowing pointed core",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S070.png",
+      "svg": "icons/S070.svg",
+      "sha256": "2c17964fd12bdd1521585381a08da0bdcb3cb7e2977dfcdc943e2d08a2c88dbc"
+    },
+    {
+      "id": "S071",
+      "name": "frostbind",
+      "label": "서리 결박",
+      "motif": "Two crossed ice shackles around a blue crystal",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S071.png",
+      "svg": "icons/S071.svg",
+      "sha256": "e87772c4583e5f9ff499be8f452d426d78d0202ce4b2cc270e99bb17e951ac7c"
+    },
+    {
+      "id": "S072",
+      "name": "venomist",
+      "label": "맹독 안개",
+      "motif": "Low curling green mist hiding a small skull",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S072.png",
+      "svg": "icons/S072.svg",
+      "sha256": "45f418d5d6e04c65836a0134619eeffe1e05dc57b980633bae94e583928584c7"
+    },
+    {
+      "id": "S073",
+      "name": "fulmen",
+      "label": "낙뢰",
+      "motif": "Single forked gold lightning bolt",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S073.png",
+      "svg": "icons/S073.svg",
+      "sha256": "5344ae40d6fa7c8af412238a8f4d0ed721dbbcef2e536ee899a782583972b952"
+    },
+    {
+      "id": "S074",
+      "name": "ventus",
+      "label": "돌풍",
+      "motif": "Three looping gusts bending leaves sideways",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S074.png",
+      "svg": "icons/S074.svg",
+      "sha256": "b77dfae7f67e23adb5c83b0153be3490ff0d89dd82c3d04d949214299e48144e"
+    },
+    {
+      "id": "S075",
+      "name": "vitae",
+      "label": "생명의 숨결",
+      "motif": "Paired healing leaves with a luminous cross",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S075.png",
+      "svg": "icons/S075.svg",
+      "sha256": "238db80c9c3cf8f0b4dc7225be8fe5fc21ccb3bbe7511921b0cc2346c95f7d68"
+    },
+    {
+      "id": "S076",
+      "name": "umbraclaw",
+      "label": "그림자 발톱",
+      "motif": "Three hooked violet tears from a shadow hand",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S076.png",
+      "svg": "icons/S076.svg",
+      "sha256": "a6ee47186110cab4910fe90ff3eb230214bab74975810c109bb5c209923e876d"
+    },
+    {
+      "id": "S077",
+      "name": "arcanum",
+      "label": "비전 관통",
+      "motif": "Horizontal piercing lance passing through two runic rings",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S077.png",
+      "svg": "icons/S077.svg",
+      "sha256": "65d8041a179721d28b0bdc2e01927582134ef1d4396c54ba254fb2c47e873c5e"
+    },
+    {
+      "id": "S078",
+      "name": "gelidum",
+      "label": "빙쇄",
+      "motif": "Broken ice shard burst with separated fragments",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S078.png",
+      "svg": "icons/S078.svg",
+      "sha256": "fe9646602712a4ffbe4799029ccc82673e4a70669895ff94727c9814a7700552"
+    },
+    {
+      "id": "S079",
+      "name": "ignisphere",
+      "label": "화염구",
+      "motif": "A round molten sun enclosed by three sweeping flames",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S079.png",
+      "svg": "icons/S079.svg",
+      "sha256": "2eb843484d8f57f17dcf547f551878f12ffa06ec6f7d8bc6dcf033ff91959d1b"
+    },
+    {
+      "id": "S080",
+      "name": "venenox",
+      "label": "독성 분출",
+      "motif": "Tall poisonous plume rising from a cracked vial",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S080.png",
+      "svg": "icons/S080.svg",
+      "sha256": "c1b9dbb9f3df5ac77a5c835225ea96027099ab00d6574e6e98b819e487724d05"
+    },
+    {
+      "id": "S081",
+      "name": "fulgora",
+      "label": "뇌우",
+      "motif": "A heavy storm cloud dropping three unequal bolts",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S081.png",
+      "svg": "icons/S081.svg",
+      "sha256": "59d90295158792eeec21d01cfdd60deaf3f46d6ac051b780b4fe5773183f2e93"
+    },
+    {
+      "id": "S082",
+      "name": "wardium",
+      "label": "수호 장벽",
+      "motif": "Wide faceted shield with an inset six-point ward",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S082.png",
+      "svg": "icons/S082.svg",
+      "sha256": "9f1164565abe718ebb109811ddae02dea5402632b2cf9a6e114f63508e954f80"
+    },
+    {
+      "id": "S083",
+      "name": "siphonis",
+      "label": "생명 흡수",
+      "motif": "Suspended blood drop within a broken sacrifice rune",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/S083.png",
+      "svg": "icons/S083.svg",
+      "sha256": "aad0af7c77ae2ed3178a546fc181a9438e483db43aba00ee3c2b0c6230151abc"
+    },
+    {
+      "id": "P040",
+      "name": "dragonheart",
+      "label": "용의 심장",
+      "motif": "A red heart pendant clasped by horn-like gold wings",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/P040.png",
+      "svg": "icons/P040.svg",
+      "sha256": "9c75e80c907ba4ccc4ce4d8d1fbd6f51c834cc1b23467c57a154074805b1345b"
+    },
+    {
+      "id": "W020",
+      "name": "dragonbone",
+      "label": "용골 지팡이",
+      "motif": "Ivory ridged wand with a tiny horned dragon skull handle",
+      "width": 36,
+      "height": 36,
+      "anchor": [
+        18,
+        18
+      ],
+      "png": "icons/W020.png",
+      "svg": "icons/W020.svg",
+      "sha256": "d15a22806caab0f92c6e5f63024f4f4385fd94bfe0de1d1c3ae9bfedbbddbfb9"
+    }
+  ]
+}
