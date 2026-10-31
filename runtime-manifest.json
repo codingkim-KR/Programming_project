@@ -1,9 +1,9 @@
 {
-  "version": "0.8.0",
-  "entry": "runtime/game-YVDQFZWD.js",
-  "stylesheet": "runtime/styles-b8a9676261be.css",
+  "version": "0.8.1",
+  "entry": "runtime/game-OJ2RW5A7.js",
+  "stylesheet": "runtime/styles-26ec75a4411c.css",
   "initialModules": [
-    "runtime/game-YVDQFZWD.js",
+    "runtime/game-OJ2RW5A7.js",
     "runtime/ch01-WQI36CSE.js"
   ],
   "chapters": {
@@ -16,9 +16,9 @@
   },
   "files": [
     {
-      "path": "runtime/game-YVDQFZWD.js",
-      "bytes": 440622,
-      "gzipBytes": 155595
+      "path": "runtime/game-OJ2RW5A7.js",
+      "bytes": 465789,
+      "gzipBytes": 162709
     },
     {
       "path": "runtime/ch01-WQI36CSE.js",
@@ -56,13 +56,13 @@
       "gzipBytes": 1627
     },
     {
-      "path": "runtime/styles-b8a9676261be.css",
-      "bytes": 59820,
-      "gzipBytes": 13392
+      "path": "runtime/styles-26ec75a4411c.css",
+      "bytes": 62288,
+      "gzipBytes": 13964
     }
   ],
-  "initialJsBytes": 467382,
-  "initialJsGzipBytes": 165592,
+  "initialJsBytes": 492549,
+  "initialJsGzipBytes": 172706,
   "buildTool": "esbuild",
   "sourceEntry": "js/main.js"
 }
